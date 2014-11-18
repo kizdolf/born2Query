@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test API REST en js.</title>
+	<script src="../jquery.js"></script>
+	<meta charset="UTF-8">
+</head>
+<body>
+<h2>Call a faire sur  backOff/API.php</h2>
+<input type="text" placeholder="login" id="login">
+<input type="pass" placeholder="password" id="pass">
+
+<button onclick="addUser()">POST : Create a new user </button>
+<button onclick="update()">PUT : update le password d'un user</button>
+<button onclick="del()">DELETE : suppr un user</button>
+<button onclick="infosOne()">GET : retourne infos sur login</button>
+<button onclick="infosAll()">GET: all users</button>
+<div id="res"></div>
+<script type="text/javascript">
+	
+	var URL = "backOff/API.php";
+
+	function api(type, endpoint){
+		$.ajax({
+			url: endpoint,
+			type: type,
+			success: insertRes
+		});
+	}
+
+	function addUser() {
+		var endpoint = URL + "/user/new/" + getData();
+		api('POST', endpoint);
+	}
+
+	function update() {
+		var endpoint = URL + "/user/change/" + getData();
+		api('PUT', endpoint);
+	}
+
+	function del() {
+		var login = $('#login').val();
+		var endpoint = URL + "/user/login/" + login;
+		api('DELETE', endpoint);
+	}
+
+	function infosOne() {
+		var login = $('#login').val();
+		var endpoint = URL + "/user/infos/" + login;
+		api('GET', endpoint);
+	}
+
+	function infosAll() {
+		var endpoint = URL + "/user/all";
+		api('GET', endpoint);
+	}
+
+	function insertRes(data){
+		$('#res').html(data);
+	}
+
+	function getData(){
+		var login = $('#login').val();
+		var pass = $('#pass').val();
+		return login + "/" + pass;
+	}
+</script>
+</body>
+</html>
