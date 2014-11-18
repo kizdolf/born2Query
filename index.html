@@ -7,14 +7,16 @@
 </head>
 <body>
 <h2>Call a faire sur  backOff/API.php</h2>
+<br>
 <input type="text" placeholder="login" id="login">
-<input type="pass" placeholder="password" id="pass">
-
-<button onclick="addUser()">POST : Create a new user </button>
-<button onclick="update()">PUT : update le password d'un user</button>
-<button onclick="del()">DELETE : suppr un user</button>
-<button onclick="infosOne()">GET : retourne infos sur login</button>
-<button onclick="infosAll()">GET: all users</button>
+<input type="pass" placeholder="password" id="pass"><br>
+<br>
+<button onclick="addUser()">POST: /user/login/mdp</button><br>
+<button onclick="update()">PUT : /user/login/newMdp</button><br>
+<button onclick="del()">DELETE : /user/login</button><br>
+<button onclick="infosOne()">GET: /user/one/login</button><br>
+<button onclick="infosAll()">GET: /user/all</button><br>
+<button onclick="fake()">GET: /solde/user/login</button><br>
 <div id="res"></div>
 <script type="text/javascript">
 	
@@ -29,24 +31,24 @@
 	}
 
 	function addUser() {
-		var endpoint = URL + "/user/new/" + getData();
+		var endpoint = URL + "/user/" + getData();
 		api('POST', endpoint);
 	}
 
 	function update() {
-		var endpoint = URL + "/user/change/" + getData();
+		var endpoint = URL + "/user/" + getData();
 		api('PUT', endpoint);
 	}
 
 	function del() {
 		var login = $('#login').val();
-		var endpoint = URL + "/user/login/" + login;
+		var endpoint = URL + "/user/" + login;
 		api('DELETE', endpoint);
 	}
 
 	function infosOne() {
 		var login = $('#login').val();
-		var endpoint = URL + "/user/infos/" + login;
+		var endpoint = URL + "/user/one/" + login;
 		api('GET', endpoint);
 	}
 
@@ -55,8 +57,22 @@
 		api('GET', endpoint);
 	}
 
+	function fake () {
+		var login = $('#login').val();
+		var endpoint = URL + "/solde/user/" + login;
+		api('GET', endpoint);
+	}
+
 	function insertRes(data){
 		$('#res').html(data);
+		var jsData=jQuery.parseJSON(data);
+		if (typeof(jsData[0]) == "undefined"){
+			$('#res').append("<div> <b>login</b>  : " + jsData.login + " <b>pass</b> : " + jsData.pass +"</div>");
+		}else{
+			for (var i = 0 ; i <= jsData.length - 1; i++) {
+				$('#res').append("<div> <b>login</b>  : " + jsData[i].login + " <b>pass</b> : " + jsData[i].pass +"</div>");
+			};
+		}
 	}
 
 	function getData(){

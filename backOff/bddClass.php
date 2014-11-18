@@ -20,8 +20,12 @@ class Bdd
 		$this->_users = $this->_db->Users;
 	}
 
-	private function addUser($login, $mdp)
+	public function addUser($login, $mdp)
 	{
+		if( strlen($login) <= 3 || strlen($mdp) <= 3){
+			return "password ou login trop court.";
+		}
+
 		$user = array("login" => $login, "pass" => $mdp);
 		if($this->_users->findOne(array("login" => $login)) != NULL){
 			return "User already exist";
@@ -33,94 +37,33 @@ class Bdd
 		}
 	}
 
-	public function insert_stuff($array)
+	public function changeUserPassword($login, $newMdp)
 	{
-		switch ($array[0]) {
-			case 'user':
-				if($array[1] == "new" && isset($array[2], $array[3])){
-					return $this->addUser($array[2], $array[3]);
-				}else{
-					return self::NOTYET;
-				}
-				break;
-			default:
-				return self::NOTYET;
-				break;
-		}
+		$user = array("login" => $login);
+		$update = array("login" => $login, "pass" => $newMdp);
+		$this->_users->update($user, $update);
 	}
 
-	public function update_stuff($array)
+	public function selectOne($login)
 	{
-		switch ($array[0]) {
-			case 'user':
-				switch ($array[1]) {
-					case 'change':
-						$user = array("login" => $array[2]);
-						$update = array("login" => $array[2], "pass" => $array[3]);
-						$this->_users->update($user, $update);
-						break;
-					
-					default:
-						return self::NOTYET;
-						break;
-				}
-				break;
-			
-			default:
-				return self::NOTYET;
-				break;
-		}
+		return $this->_users->findOne(array("login" => $login));
 	}
 
-	public function select_stuff($array)
+	public function selectAll()
 	{
-		switch ($array[0]) {
-			case 'user':
-				switch ($array[1]) {
-					case 'all':
-						$cursor = $this->_users->find();
-						$users = array();
-						foreach ($cursor as $doc) {
-							$users[] = $doc;
-						}
-						return $users;
-						break;
-					case 'infos':
-						$one = $this->_users->findOne(array("login" => $array[2]));
-						return $one;
-						break;
-					default:
-						return self::NOTYET;
-						break;
-				}
-				break;
-			
-			default:
-				# code...
-				break;
+		$cursor = $this->_users->find();
+		$users = array();
+		foreach ($cursor as $doc) {
+			$users[] = $doc;
 		}
+		return $users;
 	}
 
-	public function remove_stuff($array)
+	public function deleteOne($login)
 	{
-		switch ($array[0]) {
-			case 'user':
-				switch ($array[1]) {
-					case 'login':
-						$this->_users->remove(array("login" => $array[2]));
-						break;
-					
-					default:
-						return self::NOTYET;
-						break;
-				}
-				break;
-			
-			default:
-				return self::NOTYET;
-				break;
-		}
+		$this->_users->remove(array("login" => $login));
 	}
+
 }
 
 ?>
