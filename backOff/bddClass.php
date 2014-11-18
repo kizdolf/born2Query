@@ -7,6 +7,7 @@ class Bdd
 {
 	const SERVER	= "127.0.0.1";
 	const DBNAME = "CA_bank";
+	const NOTYET = "EndPoint Do Not Exist (yet)";
 
 	private $_mon;
 	private $_db;
@@ -36,14 +37,14 @@ class Bdd
 	{
 		switch ($array[0]) {
 			case 'user':
-				if($array[1] == "new"){
+				if($array[1] == "new" && isset($array[2], $array[3])){
 					return $this->addUser($array[2], $array[3]);
 				}else{
-					return "EndPoint Do Not Exist (yet)";
+					return self::NOTYET;
 				}
 				break;
 			default:
-				return "EndPoint Do Not Exist (yet)";
+				return self::NOTYET;
 				break;
 		}
 	}
@@ -60,13 +61,13 @@ class Bdd
 						break;
 					
 					default:
-						return "EndPoint Do Not Exist (yet)";
+						return self::NOTYET;
 						break;
 				}
 				break;
 			
 			default:
-				return "EndPoint Do Not Exist (yet)";
+				return self::NOTYET;
 				break;
 		}
 	}
@@ -89,7 +90,7 @@ class Bdd
 						return $one;
 						break;
 					default:
-						return "EndPoint Do Not Exist (yet)";
+						return self::NOTYET;
 						break;
 				}
 				break;
@@ -110,13 +111,13 @@ class Bdd
 						break;
 					
 					default:
-						return "EndPoint Do Not Exist (yet)";
+						return self::NOTYET;
 						break;
 				}
 				break;
 			
 			default:
-				return "EndPoint Do Not Exist (yet)";
+				return self::NOTYET;
 				break;
 		}
 	}
