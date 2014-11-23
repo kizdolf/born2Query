@@ -5,6 +5,7 @@ var	mongoose				= require('mongoose'),
 	Schema				= mongoose.Schema,
 	bcrypt					= require('bcrypt'),
 	SALT_WORK_FACTOR	= 10,
+	// Token					= require('rand-token'), si token faux, on regénere un token ou pas?
 	Ope					= require('./ope');
  
 var UserSchema = new Schema({
@@ -27,7 +28,8 @@ var UserSchema = new Schema({
 		current : {type: Number, default: 0},
 		authorized :{type: Number, default: 0}
 	},
-	opes : [{ type: Schema.Types.ObjectId, ref: 'Ope' }]
+	opes : [{ type: Schema.Types.ObjectId, ref: 'Ope' }],
+	token : {type: String, default: ''}
 });
 
 UserSchema.virtual('age').get(function (){
@@ -83,6 +85,10 @@ UserSchema.methods.toJSON = function() {
 	var obj = this.toObject({ virtuals: true });
 	delete obj.password;
 	return obj;
+};
+
+UserSchema.methods.compareToken = function(token){
+	return (token == this.token);
 };
 
 module.exports = mongoose.model('Teen', UserSchema); 
