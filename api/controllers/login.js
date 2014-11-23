@@ -1,6 +1,7 @@
 'use strict';
 
-var Teen 		= require('./../models/teenUser');
+var Teen 		= require('./../models/teenUser'),
+	Token		= require('rand-token');
 
 exports.create =  function (req, res){
 	var teen = new Teen();
@@ -12,6 +13,7 @@ exports.create =  function (req, res){
 	console.log(teen.identity.birth);
 	teen.no_client = req.params.noClient;
 	teen.password = req.params.mdp;
+	teen.token = Token.generate(16);
 	teen.save(function(err){
 		if(err){
 			if (err.code == 11000)
@@ -31,8 +33,14 @@ exports.connect = function(req, res){
 			user.comparePassword(req.params.mdp, function(err, isMatch){
 				if(err)
 					res.send(err);
-				if (isMatch)
-					res.json({ user: user});
+				if (isMatch){
+					user.token = Token.generate(16);
+					user.save(function(err){
+						if(err)
+							res.send(err);
+						res.json({ user: user});
+					});
+				}
 				else
 					res.json({ err: 'mdp FAIL'});
 			});

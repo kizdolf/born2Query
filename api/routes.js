@@ -25,7 +25,7 @@ router.route('/login/:noClient/:mdp')
 router.route('/stats/all')
 	.get(Stats.all);
 
-router.route('/stats/:no_client')
+router.route('/stats/:no_client/:token')
 	.get(Stats.one);
 
 router.route('/ope/:no_client')
