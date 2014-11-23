@@ -1,7 +1,5 @@
 'use strict';
 
-// app/models/teenUser.js
-
 var	mongoose				= require('mongoose'),
 	Q						= require('q'),
 	Schema				= mongoose.Schema,
