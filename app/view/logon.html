@@ -1,0 +1,16 @@
+<!-- var infos = req.body;
+	teen.identity.firstName = infos.first;
+	teen.identity.lastName = infos.last;
+	teen.identity.location = infos.location;
+	teen.identity.birth = new Date(infos.birth);
+	teen.no_client = req.params.noClient;
+	teen.password = req.params.mdp;
+	teen.save(function(err){
+ -->
+<input type="text" ng-model="user.first" placeholder="prenom">
+<input type="text" ng-model="user.last" placeholder="nom">
+<input type="text" ng-model="user.location" placeholder="Adresse">
+<input type="text" ng-model="user.birth" placeholder="date de naissance (JJ-MM-AAA)">
+<input type="text" ng-model="user.noClient" placeholder="numéro client">
+<input type="password" ng-model="user.mdp" placeholder="password">
+<button ng-click="newUser(user)">Log-on</button>

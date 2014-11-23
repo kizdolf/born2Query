@@ -1,0 +1,16 @@
+{
+	"name" : "node-api",
+	"main" : "server.js",
+	"description" : "hackathon en ligne ITschool",
+	"directories": {
+		"models": "./app/models"
+	},
+	"repository" : "none",
+	"dependencies" : {
+		"express" : "~4.0.0",
+		"mongoose" : "~3.6.13",
+		"body-parser" : "~1.0.1",
+		"bcrypt" : "~0.8.0",
+		"q": "~1.1.1"
+	}
+}
