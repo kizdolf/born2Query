@@ -3,10 +3,66 @@
 <head>
 	<title>Born2Query</title>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
-	<h1>A que Coucou</h1>
-	<div ng-view ></div>
+
+		<div class="container">
+			<header class="row">
+				<div id="header-top" class="col-md-12 blue">
+					<div class="row">
+						<div class="col-md-2">
+							<img src="images/logo_882.png">
+						</div>
+						<div class="col-md-3 col-md-offset-7">
+							User : {{user}}
+							<a href="logout">logout</a>
+						</div>
+					</div>
+				</div>
+				<div id="header-mid" class="col-md-12 yellow">
+					<div class="row">
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Comptes et service</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Messagerie</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Espace conseil</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Devis et simulation</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Quotidien</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Crédits</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Épargne</a></div>
+						<div class="col-md-1 red" style="width:12.5%"><a href="#">Assurance</a></div>
+					</div>
+				</div>
+				<div id="header-bot" class="col-md-12 green">
+					<div class="row">
+						<div class="col-md-2 purple">Path</div>
+						<div class="col-md-offset-7 col-md-3 purple">Vous avez 1 nouveau message</div>
+					</div>
+				</div>
+			</header>
+			<div id="body" class="row" style="margin-top:30px">
+				<aside class="col-md-3 blue">
+					<div class="row">
+						<div class="col-md-12">submenu 1</div>
+						<div class="col-md-12">submenu 2</div>
+						<div class="col-md-12">submenu 3</div>
+						<div class="col-md-12">submenu 4</div>
+						<div class="col-md-12">submenu 5</div>
+					</div>
+				</aside>
+				<section class="col-md-6 yellow" ng-view></section>
+				<aside class="col-md-3 blue">
+					<div class="row">
+						<div class="col-md-12">Ads</div>
+						<div class="col-md-12">
+							<img src="images/teens1.jpg" style="width:100%">
+						</div>
+					</div>
+				</aside>
+
+			</div>
+		</div>
+
 </body>
 <script src="inc/angular/angular.min.js"></script>
 <script src="inc/angular-route.min.js"></script>

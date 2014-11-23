@@ -1,0 +1,35 @@
+body {
+    color: white;
+}
+
+#header-mid {
+    text-align:center;
+}
+
+#header-mid a {
+    color: white;
+    font-weight: bold;
+    font-family: arial;
+    font-size:12px;
+    line-height: 28px;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.blue {
+    background-color: darkblue;
+}
+
+.yellow {
+    background-color: darkgoldenrod;
+}
+
+.green {
+    background-color: darkgreen;
+}
+
+.purple {
+    background-color: darkmagenta;
+}
