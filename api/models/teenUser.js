@@ -9,6 +9,7 @@ var	mongoose				= require('mongoose'),
 	Ope					= require('./ope');
  
 var UserSchema = new Schema({
+
 	no_client: { 
 		type: String, 
 		required: true, 
@@ -28,8 +29,16 @@ var UserSchema = new Schema({
 		current : {type: Number, default: 0},
 		authorized :{type: Number, default: 0}
 	},
-	opes : [{ type: Schema.Types.ObjectId, ref: 'Ope' }],
-	token : {type: String, default: ''}
+	opes : [{
+		 type: Schema.Types.ObjectId, ref: 'Ope' 
+	}],
+	token : {
+		type: String, default: ''
+	},
+	contacts : {
+		type: Array,
+		default: []
+	}
 });
 
 UserSchema.virtual('age').get(function (){
@@ -89,6 +98,22 @@ UserSchema.methods.toJSON = function() {
 
 UserSchema.methods.compareToken = function(token){
 	return (token == this.token);
+};
+
+UserSchema.methods.addMoney = function(amount){
+	this.money.current += parseInt(amount);
+	this.save();
+	return true;
+};
+
+UserSchema.methods.removeMoney = function(amount){
+	if (this.money.current - amount > this.money.authorized){
+		this.money.current -= amount;
+		this.save();
+		return 'ok';
+	}else{
+		return 'not enough money';
+	}
 };
 
 module.exports = mongoose.model('Teen', UserSchema); 

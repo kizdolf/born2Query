@@ -7,11 +7,12 @@ module.exports = (function(){
 var	router 				= express.Router(),
 	OpeCtrl				= require('./controllers/operations'),
 	Login				= require('./controllers/login'),
+	Teen				= require('./controllers/teen'),
 	Stats				= require('./controllers/stats');
 
 router.use(function(req, res, next) {
-	console.log('Something is happening.');
-	next(); // make sure we go to the next routes and don't stop here
+	console.log(req.method + ' on ' + req.url);
+	next();
 });
 
 router.get('/', function(req, res){
@@ -22,15 +23,24 @@ router.route('/login/:noClient/:mdp')
 	.post(Login.create)
 	.get(Login.connect);
 
+router.route('/logout/:noClient/:token')
+	.get(Login.logout);
+
+router.route('/contacts/:noClient/:token')
+	.post(Teen.contacts);
+
 router.route('/stats/all')
 	.get(Stats.all);
 
 router.route('/stats/:no_client/:token')
 	.get(Stats.one);
 
-router.route('/ope/:no_client')
+router.route('/ope/:no_client/:token')
 	.post(OpeCtrl.addOne);
 
+router.route('/ope/:no_client/:id_ope/:token')
+	.delete(OpeCtrl.remOne);
+	
 	return router;
 
 })();

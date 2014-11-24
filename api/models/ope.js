@@ -27,6 +27,11 @@ var opeSchema = new Schema({
 		enum: InOut, 
 		required: true, 
 		lowercase: true
+	},
+	sucess: {
+		type: Boolean,
+		required: true,
+		default: true
 	}
 });
 

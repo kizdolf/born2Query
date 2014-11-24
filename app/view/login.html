@@ -1,7 +1,39 @@
 <h1>{{message}}</h1>
 
-{{user.identity.age}}
+<div id="notLogged">
+	<input ng-model="user.no_compte" type="text" placeholder="numéro de compte">
+	<input ng-model="user.password" type="password" placeholder="password">
+	<button ng-click="login(user)">Login</button>
+</div>
+<!-- Pour test : -->
+<div id="logged">
+	<button ng-click="logout()">Log Out</button>
+	<button ng-click="statUser()" >Stats</button>
+	<br><br>
+	age: {{stats.user.age}}
+	<br>money: {{stats.user.money.current}}
+	<br>contacts:
+	<ul>
+		<li ng-repeat="contact in stats.user.contacts">{{contact.name}} => {{ contact.mail }}</li>
+	</ul>
+	<br>operations:
+	<ul style="max-height:500px; overflow:auto;">
+		<li ng-repeat="ope in stats.ops">
+			{{ope.date}} :: {{ ope.InOut }} : {{ope.amount}} via {{ ope.type }} . Satus : <span ng-show="ope.sucess">Done.</span><span ng-show="!ope.sucess">Failed.</span> <button ng-click="deleteOpe(ope)">del</button>
+		</li>
+	</ul>
+	
+	<br>
+	New ope:
+	<input ng-model="ope.amount" type="text" placeholder="amount">
+	<input ng-model="ope.type" type="text" placeholder="'cb', 'cheque', 'mobile', 'internet', 'desk'">
+	<input ng-model="ope.InOut" type="text" placeholder="'credit', 'debit'">
+	<button ng-click="newOpe(ope)">new ope</button>
+	<br>
+	New contact:
+	<input ng-model="contact.name" type="text" placeholder="name">
+	<input ng-model="contact.mail" type="text" placeholder="mail">
+	<button ng-click="newContact(contact)">new contact</button>
 
-<input ng-model="user.no_compte" type="text" placeholder="numéro de compte">
-<input ng-model="user.password" type="password" placeholder="password">
-<button ng-click="login(user)">Login</button>
+</div>
+<!-- Fin tests -->

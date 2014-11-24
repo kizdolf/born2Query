@@ -10,7 +10,6 @@ exports.create =  function (req, res){
 	teen.identity.lastName = infos.last;
 	teen.identity.location = infos.location;
 	teen.identity.birth = new Date(infos.birth);
-	console.log(teen.identity.birth);
 	teen.no_client = req.params.noClient;
 	teen.password = req.params.mdp;
 	teen.token = Token.generate(16);
@@ -47,5 +46,25 @@ exports.connect = function(req, res){
 		}else{
 			res.json({ err: 'User do not exist'});
 		}
+	});
+};
+
+exports.logout = function(req, res){
+	Teen.findOne({no_client : req.params.noClient}, function(err, user){
+		if (err)
+			res.send(err);
+		if(!!user){
+			if (!user.compareToken(req.params.token)){
+				res.json({err: 'bad Token'});
+			}else{
+				user.token = '';
+				user.save(function(err){
+					if(err)
+						res.send(err);
+					res.json({message: 'user disconnected'});
+				});
+			}
+		}
+		res.json({err: 'user do not exist'});
 	});
 };

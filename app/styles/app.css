@@ -7,6 +7,15 @@ body {
         width: 12.5%;
     }
 }
+/* Modif jules */
+input{
+    color : black;
+}
+
+/*modif jules*/
+button{
+    color: black !important;
+}
 
 #header-mid {
     text-align:center;
