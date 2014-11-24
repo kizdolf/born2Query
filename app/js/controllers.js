@@ -8,6 +8,7 @@ function($scope){
 	$scope.message = 'welcome!';
 
 }])
+
 .controller('loginCtrl', ['$scope', '$http', 
 function($scope, $http){
 
