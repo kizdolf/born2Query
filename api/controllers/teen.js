@@ -2,8 +2,8 @@
 
 var Teen 		= require('./../models/teenUser'),
 	shortId 		= require('shortid'),
+	Ope		= require('./../models/ope'),
 	nodemailer = require('nodemailer'),
-	Q			= require('q'),
 	Token		= require('rand-token'),
 	_ 			= require('lodash');
 
@@ -40,14 +40,6 @@ exports.ask = function(req, res){
 		}
 		console.log(user);
 		if(user.compareToken(req.params.token)){
-			//enregistré la demande en bdd (sous le user)
-			//marquer la demande comme en attente
-			//lui donner une ID
-			//send mail to contact
-			//dans le mail générer deux liens : put et delete. put pour valider la transaction, delete pour la refuser 
-			//et tant pis pour la sécurité pour le moment (lien à usage unique quand même.)
-
-
 			//Verif contact existe.
 			var index = _.findIndex(user.contacts, req.body.to);
 			if(index == -1){
@@ -83,10 +75,10 @@ exports.ask = function(req, res){
 							res.json({err: 'mail not sent', error : error});
 						}else{
 							res.json({message: 'mail sent', infos: info});
-						}
-					});
-				});
-			}
+						}//fin else
+					}); //fin sendmail
+				});//fin user save
+			}//fin else
 		}else{
 			res.json({err: 'wrong token'});
 		}
@@ -120,12 +112,14 @@ exports.findAsk = function(req, res){
 
 exports.updateAsk = function (req, res){
 	var idDemand = req.params.no_client;
+	//On trouve l'utilisateur qui contient cette demande.
 	Teen.findOne({'demandes.id': idDemand}, function(err, user){
 		if(err){
 			res.send(err);
 		}
 		var index = _.findIndex(user.demandes, {id: idDemand});
 		var curDate = new Date();
+		//on verifie que la demande n'est pas invalide
 		if (user.demandes[index].token != req.params.token){
 			res.json({err: 'bad token'});
 		}else if(user.demandes[index].pending === false){
@@ -133,26 +127,44 @@ exports.updateAsk = function (req, res){
 		}else if (curDate > user.demandes[index].date){
 			res.json({err: 'too late', user: user, demand: user.demandes[index]});
 		}else{
+			//On update la demande.
 			var message;
-			console.log(index + '<< index');
 			user.demandes[index].pending = false;
 			user.demandes[index].token = '';
 			if(req.body.ok === true){
 				user.demandes[index].accept = true;
+				//on ajoute des sous (owwiii)
 				user.money.current += parseInt(user.demandes[index].amount);
 				message = 'demande acceptée';
 			}else{
 				message = 'demande refusée';
 			}
-			console.log(user);
+			//on met à jour l'utilisateur
 			user.save(function(err){
 				if(err){
-					console.log(err);
 					res.send(err);
 				}
-				console.log(user);
-				res.json({message: message});
-			});
-		}
-	});
+				//on créer l'opération. 
+				var ope = new Ope();
+				ope.amount = parseInt(user.demandes[index].amount);
+				ope.type = 'internet';
+				ope.InOut = 'credit';
+				//on save l'opération
+				ope.save(function(err){
+					if (err){
+						res.send(err);
+					}
+					//on rajoute l'id de l'opération à l'utilisateur:
+					user.opes.push(ope._id);
+					//et on update (again)
+					user.save(function(err){
+						if (err)
+							res.send(err);
+						//finallement on est bon :)
+						res.json({message: message});
+					}); //fin save user
+				});//fin save ope
+			});//fin save user
+		}//fin else
+	});//fin findOne user
 };
