@@ -24,6 +24,17 @@ angular.module('CA42.routes', ['ngRoute'])
 		controller: 'demandCtrl'
 	});
 
+	$routeProvider.when('/me', {
+		templateUrl: 'view/me.html',
+		controller: 'userCtrl'
+	});
+
+
+	$routeProvider.when('/doc', {
+		templateUrl: 'view/docApi.html'
+		// controller: 'userCtrl'
+	});
+
 	$routeProvider.otherwise({
 		redirectTo: '/app/'
 	});

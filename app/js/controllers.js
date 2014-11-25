@@ -9,12 +9,11 @@ function($scope){
 
 }])
 
-.controller('loginCtrl', ['$scope', '$http', 
-function($scope, $http){
+.controller('loginCtrl', ['$scope', '$http', 'localStorageService', '$location',
+function($scope, $http, localStorageService, $location){
 
 	$scope.message = 'please log in';
 
-	$('#logged').hide();
 	$scope.login  = function(user){
 		$http.get('/api/login/' + user.no_compte + '/' + user.password)
 		.then(function(data){
@@ -23,70 +22,15 @@ function($scope, $http){
 			if(!!data.data.err){
 				$scope.message = 'Something bad happen.';
 			}else{
-				$('#logged').show();
-				$('#notLogged').hide();
 				$scope.user = data.data.user;
 				$scope.statUser();
 				$scope.message = 'Welcome ' + data.data.user.identity.firstName;
+				localStorageService.set('token', data.data.user.token);
+				localStorageService.set('no_client', data.data.user.no_client);
+				$location.path('me');
 			}
 		});
 	};
-
-	$scope.statUser = function(){
-		$http.get('/api/stats/' + $scope.user.no_client + '/' + $scope.user.token)
-		.then(function(data){
-			$scope.stats = data.data;
-		});
-	};
-
-	$scope.newOpe = function(ope){
-		$http.post('/api/ope/' + $scope.user.no_client + '/' + $scope.user.token, ope)
-		.then(function(data){
-			console.log(data.data);
-			$scope.statUser();
-		});
-	};
-
-	$scope.newContact = function(contact){
-		$http.post('/api/contacts/' + $scope.user.no_client + '/' + $scope.user.token, contact)
-		.then(function(){
-			$scope.statUser();
-		});
-	};
-
-	$scope.deleteOpe = function(ope){
-		$http.delete('/api/ope/' + $scope.user.no_client + '/' + ope._id + '/' + $scope.user.token)
-		.then(function(){
-			$scope.statUser();
-		});
-	};
-
-	$scope.logout = function(){
-		$http.get('/api/logout/' + $scope.user.no_client + '/' + $scope.user.token)
-		.then(function(data){
-			console.log(data.data);
-			$('#notLogged').show();
-			$('#logged').hide();
-		});
-	};
-
-	$scope.moneyAsking = function(contact){
-		$('#asking').show('slow');
-		$scope.askTo =  contact;
-	};
-
-	$scope.askMoney = function(ask){
-		ask.to = $scope.askTo;
-		console.log(ask);
-		$http.post('/api/ask/' + $scope.user.no_client + '/' + $scope.user.token, ask)
-		.then(function(data){
-			console.log(data);
-		});
-	};
-
-	setInterval(function(){
-		$scope.statUser();
-	}, 3000);
 
 }])
 
@@ -106,6 +50,72 @@ function($scope, $http){
 			}
 		});
 	};
+
+}])
+
+.controller('userCtrl', ['$scope', '$http', 'localStorageService',
+function($scope, $http, localStorageService){
+
+	$scope.message = 'Welcome !!';
+	var token = localStorageService.get('token');
+	var no_client = localStorageService.get('no_client');
+
+
+	$scope.statUser = function(){
+		$http.get('/api/stats/' + no_client + '/' + token)
+		.then(function(data){
+			$scope.stats = data.data;
+		});
+	};
+	$scope.statUser();
+
+	$scope.newOpe = function(ope){
+		$http.post('/api/ope/' + no_client + '/' + token, ope)
+		.then(function(data){
+			console.log(data.data);
+			$scope.statUser();
+		});
+	};
+
+	$scope.newContact = function(contact){
+		$http.post('/api/contacts/' + no_client + '/' + token, contact)
+		.then(function(){
+			$scope.statUser();
+		});
+	};
+
+	$scope.deleteOpe = function(ope){
+		$http.delete('/api/ope/' + no_client + '/' + ope._id + '/' + token)
+		.then(function(){
+			$scope.statUser();
+		});
+	};
+
+	$scope.logout = function(){
+		$http.get('/api/logout/' + no_client + '/' + token)
+		.then(function(data){
+			console.log(data.data);
+		});
+	};
+
+	$scope.moneyAsking = function(contact){
+		$('#asking').show('slow');
+		$scope.askTo =  contact;
+	};
+
+	$scope.askMoney = function(ask){
+		ask.to = $scope.askTo;
+		console.log(ask);
+		$http.post('/api/ask/' + no_client + '/' + token, ask)
+		.then(function(data){
+			console.log(data);
+		});
+	};
+
+	setInterval(function(){
+		$scope.statUser();
+	}, 3000);
+
 
 }])
 

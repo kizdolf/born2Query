@@ -1,0 +1,249 @@
+<link rel="stylesheet" type="text/css" href="styles/doc.css">
+<div id="wrapper">
+	<h1>API born2Query</h1>
+	<h4>By: jules Buret. </h4>
+	<br>
+	<hr>
+	<div class="endpoint">
+		<h3>Main endpoint</h3>  <code>/api</code>
+		<p>Tout les appels doivent être préfixé par <code>/api</code></p>
+	</div>
+	<div class="endpoint" style="width: 48%;float: right;">
+		<h3>Objet user</h3>
+		<code>
+				{<br>
+&emsp;&emsp;			no_client: String , <br>
+&emsp;&emsp;			identity: {<br>
+&emsp;&emsp;&emsp;&emsp;		firstName : String,<br>
+&emsp;&emsp;&emsp;&emsp;		lastName : String,<br>
+&emsp;&emsp;&emsp;&emsp;		birth : Date,<br>
+&emsp;&emsp;&emsp;&emsp;		location: String<br>
+&emsp;&emsp;			},<br>
+&emsp;&emsp;					money : {<br>
+&emsp;&emsp;&emsp;&emsp;					current : Number,<br>
+&emsp;&emsp;&emsp;&emsp;					authorized :Number<br>
+&emsp;&emsp;					},<br>
+&emsp;&emsp;					opes : [{<br>
+&emsp;&emsp;	&emsp;&emsp;					 type: String <br>
+&emsp;&emsp;					}],<br>
+&emsp;&emsp;					token : {<br>
+&emsp;&emsp;	&emsp;&emsp;					type: String<br>
+&emsp;&emsp;					},<br>
+&emsp;&emsp;					contacts : {<br>
+&emsp;&emsp;	&emsp;&emsp;					type: Array,<br>
+&emsp;&emsp;					},<br>
+&emsp;&emsp;					demandes: [{<br>
+&emsp;&emsp;	&emsp;&emsp;					date: Date,<br>
+&emsp;&emsp;	&emsp;&emsp;					id:String,<br>
+&emsp;&emsp;	&emsp;&emsp;					token: String,<br>
+&emsp;&emsp;	&emsp;&emsp;					pending: Boolean,<br>
+&emsp;&emsp;	&emsp;&emsp;					accept: Boolean,<br>
+&emsp;&emsp;	&emsp;&emsp;					reason: String,<br>
+&emsp;&emsp;	&emsp;&emsp;					to : {},<br>
+&emsp;&emsp;	&emsp;&emsp;					amount : Number<br>
+&emsp;&emsp;					}]<br>
+			}<br>
+			</code>
+	</div>
+	<hr>
+	<div class="endpoint" style="width: 48%;">
+		<h3>Operation Object</h3>
+		<code>
+		{
+<br>&emsp;&emsp;			date : Date,
+<br>&emsp;&emsp;			amount : {
+<br>&emsp;&emsp;&emsp;&emsp;			type: Number, 
+<br>&emsp;&emsp;&emsp;&emsp;			min : 1
+<br>&emsp;&emsp;			},
+<br>&emsp;&emsp;			type : {
+<br>&emsp;&emsp;&emsp;&emsp;			type: String, 
+<br>&emsp;&emsp;&emsp;&emsp;			enum: ('cb', 'cheque', 'mobile', 'internet', 'desk'), 
+<br>&emsp;&emsp;			},
+<br>&emsp;&emsp;			InOut: {
+<br>&emsp;&emsp;&emsp;&emsp;			type: String, 
+<br>&emsp;&emsp;&emsp;&emsp;			enum: ('credit', 'debit'), 
+<br>&emsp;&emsp;			},
+<br>&emsp;&emsp;			sucess: Boolean,
+<br>&emsp;&emsp;		}			
+		</code>
+	</div>
+	<hr style="clear:both">
+	<div class="endpoint" >
+		<h3>login</h3>  <code>/login/:no_client/:password</code>
+		<div class="rest">
+			<h4>POST</h4> 
+			<p>Création d'un utilisateur</p>
+			<h5>Entrée</h5>
+			<code>
+				{<br>
+					&emsp;&emsp;first: String (FirstName), <br>
+					&emsp;&emsp;last: String (LastName), <br>
+					&emsp;&emsp;location: String (Adresse), <br>
+					&emsp;&emsp;birth: String (Date de naissance sous la forme AAAA-MM-JJ)<br>
+				}<br>
+			</code>
+			<h5>Retour</h5>
+			<code>
+				User object
+			</code>
+		</div>
+		<div class="rest">
+			<h4>GET</h4> 
+			<p>Log-in un utilisateur</p>
+			<h5>Retour</h5>
+			<code>
+				User object
+			</code>
+		</div>
+	</div>
+	<hr >
+	<div class="endpoint">
+		<h3>logout</h3>  <code>/logout/:no_client/:token</code>
+		<div class="rest">
+			<h4>GET</h4
+			<p>Log Out un utilisateur</p>
+			<h5>Retour</h5>
+			<code>
+				{message: 'user disconnected'}<br>
+				OU<br>
+				{message: 'user do not exist'}<br>
+			</code>
+		</div>
+	</div>
+	<hr>
+	<div class="endpoint">
+		<h3>Contacts</h3>  <code>/contacts/:no_client/:token</code>
+		<div class="rest">
+			<h4>POST</h4
+			<p>Ajoute un contact</p>
+			<h5>Entrée</h5>
+			<code>
+					{
+<br>				&emsp;&emsp;	name: String,
+<br>				&emsp;&emsp; mail: String
+<br>				}
+			</code>
+			<h5>Retour</h5>
+			<code>
+				{message: 'contact saved.'}
+			</code>
+		</div>
+	</div>
+	<hr>
+	<div class="endpoint">
+		<h3>Stats</h3>  <code>/stats/all OU /stats/:no_client/:token</code>
+		<div class="rest">
+			<h4>GET /all</h4
+			<p>Retourne tout sur tout le monde (backend endpoint, developement only)</p>
+			<h5>Retour</h5>
+			<code>
+				[User object , [Operation Object]]
+			</code>
+		</div>
+		<div class="rest">
+			<h4>GET /:no_client/:token</h4
+			<p>Retourne les stats de l'utilisateur</p>
+			<h5>Retour</h5>
+			<code>
+				User object , [Operation Object]
+			</code>
+		</div>
+	</div>
+	<hr>
+	<div class="endpoint">
+		<h3>Operations</h3>  <code>/ope/:no_client/:token</code>
+		<div class="rest">
+			<h4>POST</h4
+			<p>Enregistre une nouvelle operation</p>
+			<h5>Entrée</h5>
+			<code>
+				{
+<br>					&emsp;&emsp; amount : Number,
+<br>					&emsp;&emsp; type : Enum ('cb', 'cheque', 'mobile', 'internet', 'desk'),
+<br>					&emsp;&emsp; InOut : Enum ('credit', 'debit')
+<br>				}
+			</code>
+			<h5>Retour</h5>
+			<code>
+				{err: 'Explication erreur'}
+	<br>			OU
+	<br>			{message: 'operation ajoutée avec succée'}
+			</code>
+		</div>
+		<div class="rest">
+			<h4>DELETE</h4>
+			<p>Supprime une opération operation</p>
+			<div class="alert alert-danger">
+			 L'endpoint prend un paramètre en plus: 
+			 <code>/ope/:no_client/:id_ope/:token</code>
+			 </div>
+			<h5>Retour</h5>
+			<code>
+					{err: 'Explication erreur'}
+	<br>			OU
+	<br>			{message: 'operation suprimee'}
+			</code>
+		</div>
+	</div>
+	<hr>
+	<div class="endpoint">
+		<h3>ASK</h3>  <code>/ask/:param1/:param2</code>
+		<div class="rest">
+			<h4>POST</h4>
+			<div class="alert alert-warning"><h5>:param1 = :no_client</h5>
+			<h5>:param2 = :token</h5></div>
+			<p>Créer une nouvelle demande. Envoi le mail au contact et génère les id/token nécéssaires.</p>
+			<h5>Entrée</h5>
+			<code>
+					{<br>
+	&emsp;&emsp;					reason: String,<br>
+	&emsp;&emsp;					to : {<br>
+	&emsp;&emsp;&emsp;&emsp;			name: String,<br>
+	&emsp;&emsp;&emsp;&emsp;			mail: String<br>
+	&emsp;&emsp;						},<br>
+	&emsp;&emsp;					amount : Number<br>
+					}<br>
+			</code>
+			<h5>Retour</h5>
+			<code>
+					{err: 'mail not sent', error : error}
+<br>				OU
+<br>				{message: 'mail sent'}
+<br>				OU
+<br>				{err: 'wrong token'}
+			</code>
+		</div>
+		<div class="rest">
+			<h4>GET</h4>
+			<div class="alert alert-warning"><h5>:param1 = :id_operation</h5>
+			<h5>:param2 = :token_operation</h5></div>
+			<p>Retourne une opération, si l'opération est périmé, il faudrait pouvoir la reporté.</p>
+			<h5>Retour</h5>
+			<code>
+				{err: 'description erreur'}
+<br>			OU
+<br>			{err: 'to late', user: Object User, demand: Object Demande}
+<br>			OU
+<br>			{message: 'demand ok', user: Object User, demand: Object Demande}
+			</code>
+		</div>
+		<div class="rest">
+			<h4>PUT</h4>
+			<div class="alert alert-warning"><h5>:param1 = :id_operation</h5>
+			<h5>:param2 = :token_operation</h5></div>
+			<p>Finalise une opération</p>
+			<h5>Entree</h5>
+			<code>
+				{ok: Boolean}
+			</code>
+			<h5>Retour</h5>
+			<code>
+				{err: 'description erreur'}
+<br>			OU
+<br>			{err: 'too late', user: Object User, demand: Object Demande}
+<br>			OU
+<br>			{message: 'message'}
+			</code>
+		</div>
+	</div>
+</div>

@@ -70,11 +70,11 @@ exports.ask = function(req, res){
 						text: 'Bonjour , \n '+ user.identity.firstName + ' ' + user.identity.lastName + ' a une demande pour vous\nDemande : ' + demande.reason + ' \n Avec un montant de ' + demande.amount + '\n Veuillez suivre sur ce lien pour répondre : ' + link.plain + ' \n Merci. Ca42', 
 						html: 'Bonjour , <br><b>' + user.identity.firstName  + ' ' + user.identity.lastName + '</b> a une demande pour vous<br>Demande : ' + demande.reason + ' <br> Avec un montant de ' + demande.amount + '<br> Veuillez cliquez sur ce lien pour répondre : ' + link.html + ' <br> Merci. Ca42', 
 					};
-					transporter.sendMail(mailOptions, function(error, info){
+					transporter.sendMail(mailOptions, function(error){
 						if(error){
 							res.json({err: 'mail not sent', error : error});
 						}else{
-							res.json({message: 'mail sent', infos: info});
+							res.json({message: 'mail sent'});
 						}//fin else
 					}); //fin sendmail
 				});//fin user save

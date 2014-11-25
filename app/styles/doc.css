@@ -1,0 +1,26 @@
+#wrapper{
+	margin-left: -64%;
+	margin-top: -32%;
+	left: 0;
+	width: 100vw;
+	min-height: 100vh;
+	z-index: 9999999;
+	background: white;
+	color: black;
+	text-align: center;
+	padding-left: 80px;
+}
+
+.endpoint{
+	text-align: left;
+	margin-left: 2vw;
+}
+
+.rest{
+	margin-left: 50px;
+	width: auto;
+}
+
+img{
+	display: none !important;
+}
