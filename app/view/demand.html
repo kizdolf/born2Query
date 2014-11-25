@@ -1,0 +1,11 @@
+<h2>Vous avez une demande en attente de {{user.identity.firstName}} {{user.identity.lastName}} </h2>
+<div class="alert alert-success" ng-show="message.length > 0">{{message}}</div>
+<div class="alert alert-danger" ng-show="err.length > 0">{{err}}</div>
+
+<br>Montant : {{demand.amount}}
+<br>Raison : {{demand.reason}}
+<br>A la date de : {{demand.date}}
+<div id='btnsVal'>
+<button ng-click="validate(1)">Je suis d'accord. Envoyer les sous</button>
+<button ng-click="validate(0)">Non mais il vas pas bien celui là!</button>
+</div>
