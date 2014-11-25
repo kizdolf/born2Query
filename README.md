@@ -8,3 +8,6 @@ Ou bien il faut inverser les commentaires des lignes mongoose dans server.js pou
 ``git clone repository_name``
 
 ``npm install``
+
+#doc 
+`` Clic sur la pub. (app/#/doc) ``
