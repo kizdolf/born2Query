@@ -9,6 +9,7 @@
 	color: black;
 	text-align: center;
 	padding-left: 80px;
+	padding-bottom: 150px;
 }
 
 .endpoint{
@@ -19,8 +20,18 @@
 .rest{
 	margin-left: 50px;
 	width: auto;
+	overflow: hidden;
+}
+
+.rest h4{
+	cursor: pointer;
 }
 
 img{
 	display: none !important;
+}
+
+code{
+	font-size: 115% !important;
+	color: #0D7021 !important;
 }
