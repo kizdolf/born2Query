@@ -23,10 +23,10 @@ router.route('/login/:no_client/:mdp')
 	.post(Login.create)
 	.get(Login.connect);
 
-router.route('/logout/:noClient/:token')
+router.route('/logout/:no_client/:token')
 	.get(Login.logout);
 
-router.route('/contacts/:noClient/:token')
+router.route('/contacts/:no_client/:token')
 	.post(Teen.contacts);
 
 router.route('/stats/all')

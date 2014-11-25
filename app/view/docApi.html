@@ -3,6 +3,7 @@
 	<h1>API born2Query</h1>
 	<h4>By: jules Buret. </h4>
 	<br>
+	<div class="alert alert-info">Clic sur les methodes pour avoir les détails</div>
 	<hr>
 	<div class="endpoint">
 		<h3>Main endpoint</h3>  <code>/api</code>
@@ -246,8 +247,15 @@
 			</code>
 		</div>
 	</div>
+	<div>
+		Ideas/todo
+		<ul>
+			<li>Passer le Logout en DELETE sur /login</li>
+		</ul>
+	</div>
 </div>
 <script>
+	'use strict';
 	$('.rest').height(30);
 	$('.rest h4').click(function(){
 		var d = $(this).parent();
@@ -258,5 +266,5 @@
 			d.height('auto');
 			d.addClass('auto');
 		}
-	})
+	});
 </script>

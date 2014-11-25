@@ -8,7 +8,7 @@
 </head>
 <body>
 
-		<div class="container">
+		<div class="container" ng-controller='mainCtrl'>
 			<header class="row">
 				<div id="header-top" class="col-md-12 blue">
 					<div class="row">
@@ -16,8 +16,7 @@
 							<img src="images/logo_882.png">
 						</div>
 						<div class="col-md-3 col-md-offset-7 col-sm-12">
-							User : {{user}}
-							<a href="logout">logout</a>
+							<a ng-click="logout()">logout</a>
 						</div>
 					</div>
 				</div>

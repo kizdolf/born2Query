@@ -130,7 +130,7 @@ exports.updateAsk = function (req, res){
 			//On update la demande.
 			var message;
 			user.demandes[index].pending = false;
-			user.demandes[index].token = '';
+			user.demandes[index].token = Token.generate(16);
 			if(req.body.ok === true){
 				user.demandes[index].accept = true;
 				//on ajoute des sous (owwiii)

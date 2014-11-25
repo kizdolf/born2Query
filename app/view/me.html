@@ -1,11 +1,13 @@
-<h1>Coucou</h1>
+<h1>Coucou {{stats.user.identity.firstName}}</h1>
 
 <h3>{{token}}</h3>
 
 <div id="logged">
-	<button ng-click="logout()">Log Out</button>
-	<button ng-click="statUser()" >Stats</button>
 	<br><br>
+	<div>
+		<h2>STATS</h2>
+		 {{credit.nb}} credits  vs {{debit.nb}} debits ({{credit.amount}} vs {{debit.amount}})
+	</div>
 	age: {{stats.user.age}}
 	<br>money: {{stats.user.money.current}}
 	<br>contacts:
@@ -41,5 +43,8 @@
 	<input ng-model="contact.name" type="text" placeholder="name">
 	<input ng-model="contact.mail" type="text" placeholder="mail">
 	<button ng-click="newContact(contact)">new contact</button>
+	<div class="alert alert-info" ng-show="notif.length > 0" style="position: fixed; top: 10vh;">
+	{{notif}}
+	</div>
 
 </div>

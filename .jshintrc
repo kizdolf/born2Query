@@ -7,6 +7,7 @@
 			"exports",
 			"__dirname",
 			"process", 
-			"$" ],
+			"$",
+			"jQuery" ],
   "devel" : true
 }
