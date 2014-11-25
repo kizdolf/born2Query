@@ -25,7 +25,7 @@ exports.create =  function (req, res){
 };
 
 exports.connect = function(req, res){
-	Teen.findOne({no_client: req.params.noClient}, function(err, user){
+	Teen.findOne({no_client: req.params.no_client}, function(err, user){
 		if(err)
 			res.send(err);
 		if(!!user){

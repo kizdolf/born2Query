@@ -14,8 +14,19 @@
 	<br>money: {{stats.user.money.current}}
 	<br>contacts:
 	<ul>
-		<li ng-repeat="contact in stats.user.contacts">{{contact.name}} => {{ contact.mail }}</li>
+		<li ng-repeat="contact in stats.user.contacts">
+		{{contact.name}} => {{ contact.mail }} <br>
+		<a ng-click="moneyAsking(contact)">Ask money</a>
+		</li>
 	</ul>
+	<div id="asking" style="display:none;">
+		<p>Demander un peu de thunes à {{askTo.name}}</p>
+		<input	type="text" placeholder="montant" ng-model="ask.amount">
+		<input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date">
+		<textarea ng-model="ask.reason">"explaaaaaiiiinnnn(référence à doctor who sisi tkt)</textarea>
+		<button ng-click="askMoney(ask)">Ask!</button>
+
+	</div>
 	<br>operations:
 	<ul style="max-height:500px; overflow:auto;">
 		<li ng-repeat="ope in stats.ops">

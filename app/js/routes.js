@@ -19,6 +19,11 @@ angular.module('CA42.routes', ['ngRoute'])
 		controller : 'logonCtrl'
 	});
 
+	$routeProvider.when('/uniqueDemand', {
+		templateUrl: 'view/demand.html',
+		controller: 'demandCtrl'
+	});
+
 	$routeProvider.otherwise({
 		redirectTo: '/app/'
 	});

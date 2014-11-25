@@ -38,7 +38,17 @@ var UserSchema = new Schema({
 	contacts : {
 		type: Array,
 		default: []
-	}
+	},
+	demandes: [{
+		date: Date,
+		id:{type: String, index: {unique: true}},
+		token: String,
+		pending: Boolean,
+		accept: Boolean,
+		reason: String,
+		to : {},
+		amount : Number
+	}]
 });
 
 UserSchema.virtual('age').get(function (){

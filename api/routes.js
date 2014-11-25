@@ -11,7 +11,7 @@ var	router 				= express.Router(),
 	Stats				= require('./controllers/stats');
 
 router.use(function(req, res, next) {
-	console.log(req.method + ' on ' + req.url);
+	// console.log(req.method + ' on ' + req.url);
 	next();
 });
 
@@ -19,7 +19,7 @@ router.get('/', function(req, res){
 	res.json({message: 'main endpoint of the API'});
 });
 
-router.route('/login/:noClient/:mdp')
+router.route('/login/:no_client/:mdp')
 	.post(Login.create)
 	.get(Login.connect);
 
@@ -40,6 +40,11 @@ router.route('/ope/:no_client/:token')
 
 router.route('/ope/:no_client/:id_ope/:token')
 	.delete(OpeCtrl.remOne);
+
+router.route('/ask/:no_client/:token')
+	.put(Teen.updateAsk)
+	.post(Teen.ask)
+	.get(Teen.findAsk);
 	
 	return router;
 

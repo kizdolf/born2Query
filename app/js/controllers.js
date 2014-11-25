@@ -12,7 +12,6 @@ function($scope){
 .controller('loginCtrl', ['$scope', '$http', 
 function($scope, $http){
 
-
 	$scope.message = 'please log in';
 
 	$('#logged').hide();
@@ -71,6 +70,24 @@ function($scope, $http){
 		});
 	};
 
+	$scope.moneyAsking = function(contact){
+		$('#asking').show('slow');
+		$scope.askTo =  contact;
+	};
+
+	$scope.askMoney = function(ask){
+		ask.to = $scope.askTo;
+		console.log(ask);
+		$http.post('/api/ask/' + $scope.user.no_client + '/' + $scope.user.token, ask)
+		.then(function(data){
+			console.log(data);
+		});
+	};
+
+	setInterval(function(){
+		$scope.statUser();
+	}, 3000);
+
 }])
 
 .controller('logonCtrl', ['$scope', '$http', 
@@ -89,5 +106,36 @@ function($scope, $http){
 			}
 		});
 	};
+
+}])
+
+.controller('demandCtrl', ['$scope', '$http', '$routeParams',
+function($scope, $http, $routeParams){
+
+	$scope.params = $routeParams;
+	console.log($scope.params);
+	$http.get('/api/ask/'+ $scope.params.id + '/' + $scope.params.token)
+	.then(function(data){
+		if(!!data.data.err)
+			$scope.err = data.data.err;
+		$scope.user = data.data.user;
+		$scope.demand = data.data.demand;
+		console.log(data.data);
+	});
+
+	$scope.validate = function(status){
+		var ok = {ok: true};
+		if (status === 0)
+			ok.ok = false;
+		$http.put('/api/ask/'+ $scope.params.id + '/' + $scope.params.token, ok)
+		.then(function(data){
+			$('#btnsVal').hide();
+			if(!!data.data.err)
+				$scope.err = data.data.err;
+			else
+				$scope.message = data.data.message;
+		});
+	};
+
 
 }]);
