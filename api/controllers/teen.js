@@ -38,7 +38,6 @@ exports.ask = function(req, res){
 		if(err){
 			res.send(err);
 		}
-		console.log(user);
 		if(user.compareToken(req.params.token)){
 			//Verif contact existe.
 			var index = _.findIndex(user.contacts, req.body.to);
@@ -102,7 +101,7 @@ exports.findAsk = function(req, res){
 			}else if(demande.pending === false){
 				res.json({err: 'operation already answered'});
 			}else if (curDate > demande.date){
-				res.json({err: 'to late', user: user, demand: demande});
+				res.json({err: 'too late', user: user, demand: demande});
 			}else{
 				res.json({message: 'demand ok', user: user, demand: demande});				
 			}

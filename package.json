@@ -3,9 +3,11 @@
   "main": "server.js",
   "description": "hackathon en ligne ITschool",
   "directories": {
-    "models": "./app/models"
+    "models": "./api/models",
+    "BackEnd_controllers": "./api/controllers",
+    "app": "./app"
   },
-  "repository": "none",
+  "repository": "https://github.com/kizdolf/born2Query.git",
   "dependencies": {
     "bcrypt": "~0.8.0",
     "body-parser": "~1.0.1",

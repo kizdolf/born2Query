@@ -1,12 +1,17 @@
 'use strict';
 
 var Teen 		= require('./../models/teenUser');
+var Ope			= require('./../models/ope.js');
 
 exports.all = function(req, res){
 	Teen.find({}, function(err, users){
-	if(err)
-		res.send(err);
-		res.json({message: 'all users', users: users});
+		if(err)
+			res.send(err);
+		Ope.find({}, function(err, opes){
+			if (err)
+				res.send(err);
+			res.json({message: 'all stats (like a dump)', users: users, opes: opes});
+		});
 	});
 };
 

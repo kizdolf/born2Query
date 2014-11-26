@@ -5,6 +5,9 @@ angular.module('CA42.controllers', [])
 .controller('mainCtrl', ['$scope', '$http', 'localStorageService', '$location',
 function($scope, $http, localStorageService, $location){
 
+	if (localStorageService.get('token') !== null)
+		$location.path('me');
+
 	$scope.logout = function(){
 		var token = localStorageService.get('token');
 		var no_client = localStorageService.get('no_client');
@@ -21,6 +24,9 @@ function($scope, $http, localStorageService, $location){
 
 	$scope.message = 'please log in';
 	localStorageService.clearAll();
+
+	if (localStorageService.get('token') !== null)
+		$location.path('me');
 
 	$scope.login  = function(user){
 		$http.get('/api/login/' + user.no_compte + '/' + user.password)
@@ -85,9 +91,19 @@ function($scope, $http, localStorageService){
 		$http.post('/api/ope/' + no_client + '/' + token, ope)
 		.then(function(data){
 			console.log(data.data);
+			if(data.data.err){
+				notif(data.data.err);
+			}
 			$scope.statUser();
 		});
 	};
+
+	function notif(txt){
+		$scope.notif=txt;
+		setTimeout(function(){
+			$scope.notif = '';
+		}, 3000);
+	}
 
 	$scope.newContact = function(contact){
 		$http.post('/api/contacts/' + no_client + '/' + token, contact)
@@ -127,10 +143,10 @@ function($scope, $http, localStorageService){
 		$scope.credit = {};
 		$scope.debit = {};
 		$scope.credit.opes = jQuery.grep(opes, function( n ) {
-			return ( n.InOut === 'credit');
+			return ( (n.InOut === 'credit') && (n.sucess === true));
 		});
 		$scope.debit.opes = jQuery.grep(opes, function( n ) {
-			return ( n.InOut !== 'credit');
+			return ( (n.InOut !== 'credit') && (n.sucess === true));
 		});
 	};
 
@@ -174,3 +190,4 @@ function($scope, $http, $routeParams){
 
 
 }]);
+

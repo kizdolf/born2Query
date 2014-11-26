@@ -1,4 +1,6 @@
 node_modules/
 .idea
 npm-debug.log
+app/ex_response
+backups/
 	
