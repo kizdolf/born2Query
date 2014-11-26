@@ -70,4 +70,16 @@
 <script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/routes.js"></script>
+<script src="js/extend_search.js"></script>
+<script type="text/javascript">
+  $(function(){
+	$("#search").exp({
+		width: 80,
+		duration: 200,
+		action: function(val){
+			alert(val);
+		}
+	});
+  });
+</script>
 </html>
