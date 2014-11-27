@@ -3,3 +3,16 @@
 <input ng-model="user.no_compte" type="text" placeholder="numéro de compte">
 <input ng-model="user.password" type="password" placeholder="password">
 <button ng-click="login(user)">Login</button>
+<script>
+  $(function(){
+	'use strict';
+	$('input').width(80);
+	$('input').exp({
+		width: 280,
+		duration: 200,
+		action: function(val){
+			alert(val);
+		}
+	});
+  });
+</script>
