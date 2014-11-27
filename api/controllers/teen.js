@@ -133,7 +133,7 @@ exports.updateAsk = function (req, res){
 			if(req.body.ok === true){
 				user.demandes[index].accept = true;
 				//on ajoute des sous (owwiii)
-				user.money.current += parseInt(user.demandes[index].amount);
+				user.money.current += parseFloat(user.demandes[index].amount);
 				message = 'demande acceptée';
 			}else{
 				message = 'demande refusée';
@@ -145,7 +145,7 @@ exports.updateAsk = function (req, res){
 				}
 				//on créer l'opération. 
 				var ope = new Ope();
-				ope.amount = parseInt(user.demandes[index].amount);
+				ope.amount = parseFloat(user.demandes[index].amount);
 				ope.type = 'internet';
 				ope.InOut = 'credit';
 				//on save l'opération

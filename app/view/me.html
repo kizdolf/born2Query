@@ -43,8 +43,8 @@
 	<input ng-model="contact.name" type="text" placeholder="name">
 	<input ng-model="contact.mail" type="text" placeholder="mail">
 	<button ng-click="newContact(contact)">new contact</button>
-	<div class="alert alert-info" ng-show="notif.length > 0" style="position: fixed; top: 10vh;">
-	{{notif}}
+	<div class="alert alert-info" ng-show="notif !== '' " style="position: fixed; top: 10vh;">
+		{{notif}}
 	</div>
 
 </div>

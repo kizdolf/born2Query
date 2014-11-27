@@ -63,10 +63,11 @@ function($scope, $http){
 
 }])
 
-.controller('userCtrl', ['$scope', '$http', 'localStorageService', 
-function($scope, $http, localStorageService){
+.controller('userCtrl', ['$scope', '$http', 'localStorageService', '$timeout',
+function($scope, $http, localStorageService, $timeout){
 
 	$scope.message = 'Welcome !!';
+	$scope.notif = '';
 	var token = localStorageService.get('token');
 	var no_client = localStorageService.get('no_client');
 
@@ -92,18 +93,19 @@ function($scope, $http, localStorageService){
 		.then(function(data){
 			console.log(data.data);
 			if(data.data.err){
-				notif(data.data.err);
+				popNotif(data.data.err);
 			}
 			$scope.statUser();
 		});
 	};
 
-	function notif(txt){
+	var popNotif = function(txt){
 		$scope.notif=txt;
-		setTimeout(function(){
+		$timeout(function(){
+			console.log('ici');
 			$scope.notif = '';
 		}, 3000);
-	}
+	};
 
 	$scope.newContact = function(contact){
 		$http.post('/api/contacts/' + no_client + '/' + token, contact)
@@ -130,10 +132,7 @@ function($scope, $http, localStorageService){
 		$http.post('/api/ask/' + no_client + '/' + token, ask)
 		.then(function(data){
 			console.log(data);
-			$scope.notif = data.data.message;
-			setTimeout(function(){
-				$scope.notif = '';
-			}, 2500);
+			popNotif(data.data.message);
 		});
 	};
 

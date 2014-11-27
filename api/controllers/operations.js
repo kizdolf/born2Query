@@ -11,7 +11,7 @@ exports.addOne =  function(req, res){
 		}else{
 			var ope = new Ope();
 			var kwarg = req.body;
-			ope.amount = parseInt(kwarg.amount);
+			ope.amount = parseFloat(kwarg.amount);
 			ope.type = kwarg.type;
 			ope.InOut = kwarg.InOut;
 			ope.sucess = true;
