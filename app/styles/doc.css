@@ -1,15 +1,15 @@
 #wrapper{
-	margin-left: -64%;
-	margin-top: -32%;
+	/*margin-left: -64%;*/
+	/*margin-top: -32%;*/
 	left: 0;
-	width: 100vw;
-	min-height: 100vh;
-	z-index: 9999999;
+	/*width: 100vw;*/
+	/*min-height: 100vh;*/
+	/*z-index: 9999999;*/
 	background: white;
 	color: black;
 	text-align: center;
-	padding-left: 80px;
-	padding-bottom: 150px;
+	/*padding-left: 80px;*/
+	/*padding-bottom: 150px;*/
 }
 
 .endpoint{

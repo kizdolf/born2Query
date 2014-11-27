@@ -94,6 +94,8 @@ function($scope, $http, localStorageService, $timeout){
 			console.log(data.data);
 			if(data.data.err){
 				popNotif(data.data.err);
+			}else{
+				popNotif(data.data.message);
 			}
 			$scope.statUser();
 		});
@@ -101,10 +103,7 @@ function($scope, $http, localStorageService, $timeout){
 
 	var popNotif = function(txt){
 		$scope.notif=txt;
-		$timeout(function(){
-			console.log('ici');
-			$scope.notif = '';
-		}, 3000);
+		$timeout(function(){ $scope.notif = '';}, 3000);
 	};
 
 	$scope.newContact = function(contact){

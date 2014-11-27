@@ -89,7 +89,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 UserSchema.methods.getOPs = function(){
 	var def = Q.defer();
-	Ope.find({_id:{$in: this.opes}}, function(err, alls){
+	Ope.find({_id:{$in: this.opes}}).sort({date: -1}).exec(function(err, alls){
 		if(err)
 			def.reject(err);
 		def.resolve(alls);

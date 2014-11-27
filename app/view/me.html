@@ -14,7 +14,7 @@
 	<ul>
 		<li ng-repeat="contact in stats.user.contacts">
 		{{contact.name}} => {{ contact.mail }} <br>
-		<a ng-click="moneyAsking(contact)">Ask money</a>
+		<a ng-click="moneyAsking(contact)" class="btn btn-info">Ask money</a>
 		</li>
 	</ul>
 	<div id="asking" style="display:none;">
@@ -28,15 +28,24 @@
 	<br>operations:
 	<ul style="max-height:500px; overflow:auto;">
 		<li ng-repeat="ope in stats.ops">
-			{{ope.date}} :: {{ ope.InOut }} : {{ope.amount}} via {{ ope.type }} . Satus : <span ng-show="ope.sucess">Done.</span><span ng-show="!ope.sucess">Failed.</span> <button ng-click="deleteOpe(ope)">del</button>
+			{{ope.date.split('T')[0].split('-').reverse().join('/')}} : 
+			<span ng-if="ope.InOut == 'credit'">+</span>
+			<span ng-if="ope.InOut != 'credit'" >-</span>
+			{{ope.amount}} € via {{ ope.type }} . Status : <span ng-show="ope.sucess">Done.</span><span ng-show="!ope.sucess">Failed.</span> <button class="btn btn-danger btn-xs " ng-click="deleteOpe(ope)" title="supress ope">x</button>
 		</li>
 	</ul>
 	
 	<br>
 	New ope:
+	Credit (+)<input type="checkbox" ng-model="ope.InOut" ng-true-value="credit"> <br/>
+  	Debit (-) <input type="checkbox" ng-model="ope.InOut" ng-true-value="debit"> <br/>
+  	<h4>Type :</h4>
+  	CB <input type="checkbox" ng-model="ope.type" ng-true-value="cb"> <br/>
+  	Cheque <input type="checkbox" ng-model="ope.type" ng-true-value="cheque"> <br/>
+  	Mobile <input type="checkbox" ng-model="ope.type" ng-true-value="mobile"> <br/>
+  	Internet <input type="checkbox" ng-model="ope.type" ng-true-value="internet"> <br/>
+  	Desk <input type="checkbox" ng-model="ope.type" ng-true-value="desk"> <br/>
 	<input ng-model="ope.amount" type="text" placeholder="amount">
-	<input ng-model="ope.type" type="text" placeholder="'cb', 'cheque', 'mobile', 'internet', 'desk'">
-	<input ng-model="ope.InOut" type="text" placeholder="'credit', 'debit'">
 	<button ng-click="newOpe(ope)">new ope</button>
 	<br>
 	New contact:
