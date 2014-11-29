@@ -5,7 +5,6 @@ var	mongoose				= require('mongoose'),
 	Schema				= mongoose.Schema,
 	bcrypt					= require('bcrypt'),
 	SALT_WORK_FACTOR	= 10,
-	// Token					= require('rand-token'), si token faux, on regénere un token ou pas?
 	Ope					= require('./ope');
  
 var UserSchema = new Schema({
@@ -111,7 +110,7 @@ UserSchema.methods.compareToken = function(token){
 };
 
 UserSchema.methods.addMoney = function(amount){
-	this.money.current += parseInt(amount);
+	this.money.current += parseFloat(amount);
 	this.save();
 	return true;
 };

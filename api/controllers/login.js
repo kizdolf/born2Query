@@ -16,7 +16,7 @@ exports.create =  function (req, res){
 	teen.save(function(err){
 		if(err){
 			if (err.code == 11000)
-				res.json({ message: 'user ' + req.params.no_client + ' alredy exist!' });
+				res.json({ message: 'User ' + req.params.no_client + ' alredy exist!' });
 			else
 				res.send(err);
 		}
@@ -41,7 +41,7 @@ exports.connect = function(req, res){
 					});
 				}
 				else
-					res.json({ err: 'mdp FAIL'});
+					res.json({ err: 'Wrong password'});
 			});
 		}else{
 			res.json({ err: 'User do not exist'});
@@ -61,10 +61,10 @@ exports.logout = function(req, res){
 				user.save(function(err){
 					if(err)
 						res.send(err);
-					res.json({message: 'user disconnected'});
+					res.json({message: 'User disconnected'});
 				});
 			}
 		}
-		res.json({err: 'user do not exist'});
+		res.json({err: 'User do not exist'});
 	});
 };

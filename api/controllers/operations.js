@@ -7,7 +7,7 @@ exports.addOne =  function(req, res){
 	var user;
 	user = Teen.findOne({no_client : req.params.no_client}, function(err, user){
 		if(!user){
-			res.json({err: 'there is no such user.'});
+			res.json({err: 'User do not exist'});
 		}else{
 			var ope = new Ope();
 			var kwarg = req.body;
@@ -20,7 +20,7 @@ exports.addOne =  function(req, res){
 				case 'credit':
 					if (!user.addMoney(ope.amount)){
 						ope.sucess = false;
-						res.json({err: 'Erreur sauvegarde opération'});
+						res.json({err: 'Failure saving operation'});
 					}
 				break;
 				case 'debit':
@@ -31,7 +31,7 @@ exports.addOne =  function(req, res){
 					}
 					break;
 				default:
-					res.json({err: 'Mauvais type d\'opération (credit ou debit)'});
+					res.json({err: 'Wrong type of operation (credit or debit)'});
 					ope.sucess = false;
 			}
 			ope.save(function(err){
@@ -41,7 +41,7 @@ exports.addOne =  function(req, res){
 				user.save(function(err){
 					if(err)
 						res.send(err);
-					res.json({message: 'operation ajoutée avec succée'});
+					res.json({message: 'Operation saved'});
 				});
 			});
 		}
@@ -54,7 +54,7 @@ exports.remOne = function(req, res){
 		if(err)
 			res.send(err);
 		if(!user){
-			res.json({err: 'there is no such user.'});
+			res.json({err: 'User do not exist'});
 		}else{
 			if (user.compareToken(req.params.token)){
 				var index = user.opes.indexOf(req.params.id_ope);
@@ -63,13 +63,13 @@ exports.remOne = function(req, res){
 					user.save(function(err){
 						if(err)
 							res.send(err);
-						res.json({message: 'operation suprimee'});
+						res.json({message: 'Operation supressed'});
 					});
 				}else{
-					res.json({err: 'operation non trouvee'});
+					res.json({err: 'Operation do not exist'});
 				}
 			}else{
-				res.json({err: 'wrong token'});
+				res.json({err: 'Wrong token'});
 			}
 		}
 	});

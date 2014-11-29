@@ -4,7 +4,7 @@
 <div id="logon">
 	<label style="width:150px">Ton numéro de client</label><input ng-model="user.no_compte" type="text" placeholder="numéro de compte"> <br/>
 	<label style="width:150px">Ton mot de passe</label><input type="password" ng-model="user.password" placeholder="•••••••"> <br />
-	<button ng-click="login(user)" class="btn btn-default">Connexion</button>
+	<button ng-click="login(user)" class="btn btn-default" id="btnLogin">Connexion</button>
 </div>
 
 
@@ -15,8 +15,8 @@
 	$('input').exp({
 		width: 280,
 		duration: 200,
-		action: function(val){
-			alert(val);
+		action: function(){
+			$('#btnLogin').click();
 		}
 	});
   });

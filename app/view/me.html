@@ -23,6 +23,13 @@
 
 	</div>
 	<div ng-switch-when="money">
+		<div id="asking" style="display:none;">
+			<h3>Demande de l'argent à {{askTo.name}}</h3>
+			<label style="width:170px">De combien as-tu besoin ?</label><input	type="text" placeholder="montant" ng-model="ask.amount"><br/>
+			<label style="width:170px">Pour quand as-tu besoin d'argent ?</label><input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date"><br/>
+			<label style="width:170px">Pourquoi veux-tu demander de l'argent ?</label><textarea ng-model="ask.reason">J'ai besoin d'argent de poche parce que...</textarea><br/>
+			<button ng-click="askMoney(ask)" class="btn btn-default">Envoie ta demande</button>
+		</div>
 		<h3>Voici la liste de tes contacts :</h3>
 		<ul>
 			<li ng-repeat="contact in stats.user.contacts" style="list-style: none; margin-bottom:10px">
@@ -39,13 +46,6 @@
 		<hr>
 		<div class="alert alert-info" ng-show="notif !== '' " style="position: fixed; top: 10vh;">
 			{{notif}}
-		</div>
-		<div id="asking" style="display:none;">
-			<h3>Demande de l'argent à {{askTo.name}}</h3>
-			<label style="width:170px">De combien as-tu besoin ?</label><input	type="text" placeholder="montant" ng-model="ask.amount"><br/>
-			<label style="width:170px">Pour quand as-tu besoin d'argent ?</label><input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date"><br/>
-			<label style="width:170px">Pourquoi veux-tu demander de l'argent ?</label><textarea ng-model="ask.reason">J'ai besoin d'argent de poche parce que...</textarea><br/>
-			<button ng-click="askMoney(ask)" class="btn btn-default">Envoie ta demande</button>
 		</div>
 	</div>
 	<div ng-switch-when="operations">
@@ -88,7 +88,7 @@
 			Ici, tu vas pouvoir gérer ton argent pour de vrai !
 		</p>
 		<p>
-			Regarde sur la droite, un menu te permet de consulter les informations de ton compte, afin de savoir combien d'argent tu possèdes.
+			Regarde sur la gauche, un menu te permet de consulter les informations de ton compte, afin de savoir combien d'argent tu possèdes.
 		</p>
 		<p>
 			Tu peux également demander de l'argent à l'un des proches. Rentre son email et explique-lui pourquoi il te faut un peu d'argent de poche. Il pourra alors t'accorder ou te refuser ce petit extra !

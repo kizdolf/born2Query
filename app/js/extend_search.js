@@ -30,7 +30,7 @@
 		if (set.action && typeof(set.action) == 'function'){
 			this.on('keypress', function(e) {
 				if (e.which === 13) {
-					set.action($(this).val());
+					set.action();
 				}
 			});
 		}

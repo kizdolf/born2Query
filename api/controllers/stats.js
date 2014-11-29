@@ -24,10 +24,10 @@ exports.one = function(req, res){
 				res.json({err: 'Wrong token'});
 			}
 			user.getOPs().then(function(ops){
-				res.json({message: 'there is one user.', user: user, ops : ops});
+				res.json({message: 'User founded', user: user, ops : ops});
 			});
 		}else{
-			res.json({err: 'there is no such user.'});
+			res.json({err: 'User do not exist'});
 		}
 	});
 };
