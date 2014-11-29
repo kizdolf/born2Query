@@ -26,7 +26,7 @@
 		<div id="asking" style="display:none;">
 			<h3>Demande de l'argent à {{askTo.name}}</h3>
 			<label style="width:170px">De combien as-tu besoin ?</label><input	type="text" placeholder="montant" ng-model="ask.amount"><br/>
-			<label style="width:170px">Pour quand as-tu besoin d'argent ?</label><input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date"><br/>
+			<label style="width:170px">Pour quand as-tu besoin d'argent ?</label><input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date" id="datepicker"><br/>
 			<label style="width:170px">Pourquoi veux-tu demander de l'argent ?</label><textarea ng-model="ask.reason">J'ai besoin d'argent de poche parce que...</textarea><br/>
 			<button ng-click="askMoney(ask)" class="btn btn-default">Envoie ta demande</button>
 		</div>
@@ -99,3 +99,6 @@
 	</div>
 
 </div>
+ <script>
+    $( '#datepicker' ).datepicker({minDate: new Date()});
+  </script>
