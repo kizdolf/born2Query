@@ -2,13 +2,16 @@
 
 angular.module('CA42.controllers', [])
 
-.controller('mainCtrl', ['$scope', '$http', 'localStorageService', '$location',
-function($scope, $http, localStorageService, $location){
-
-	if (localStorageService.get('token') !== null)
+.controller('mainCtrl', ['$scope', '$http', 'localStorageService', '$location', '$rootScope',
+function($scope, $http, localStorageService, $location, $rootScope){
+	$rootScope.path = $location.url();
+	$rootScope.logged = false;
+	if (localStorageService.get('token') !== null) {
 		$location.path('me');
+	}
 
 	$scope.logout = function(){
+		$rootScope.logged = false;
 		var token = localStorageService.get('token');
 		var no_client = localStorageService.get('no_client');
 		$http.get('/api/logout/' + no_client + '/' + token).then(function(){
@@ -19,14 +22,14 @@ function($scope, $http, localStorageService, $location){
 
 }])
 
-.controller('loginCtrl', ['$scope', '$http', 'localStorageService', '$location',
-function($scope, $http, localStorageService, $location){
-
+.controller('loginCtrl', ['$scope', '$http', 'localStorageService', '$location', '$rootScope',
+function($scope, $http, localStorageService, $location, $rootScope){
 	$scope.message = 'please log in';
 	localStorageService.clearAll();
 
-	if (localStorageService.get('token') !== null)
-		$location.path('me');
+	if (localStorageService.get('token') !== null) {
+		$location.url('me');
+	}
 
 	$scope.login  = function(user){
 		$http.get('/api/login/' + user.no_compte + '/' + user.password)
@@ -63,8 +66,13 @@ function($scope, $http){
 
 }])
 
-.controller('userCtrl', ['$scope', '$http', 'localStorageService', '$timeout',
-function($scope, $http, localStorageService, $timeout){
+.controller('userCtrl', ['$scope', '$http', 'localStorageService', '$timeout', '$routeParams', '$location', '$rootScope',
+function($scope, $http, localStorageService, $timeout, $routeParams, $location, $rootScope){
+	$rootScope.logged = true;
+	$rootScope.doc = false;
+
+	$rootScope.path = $location.url();
+	$scope.template = $routeParams.template;
 
 	$scope.message = 'Welcome !!';
 	$scope.notif = '';
@@ -158,8 +166,11 @@ function($scope, $http, localStorageService, $timeout){
 
 }])
 
-.controller('demandCtrl', ['$scope', '$http', '$routeParams',
-function($scope, $http, $routeParams){
+
+.controller('demandCtrl', ['$scope', '$http', '$routeParams', '$rootScope',
+function($scope, $http, $routeParams, $rootScope){
+
+	$rootScope.doc = false;
 
 	$scope.params = $routeParams;
 	console.log($scope.params);
@@ -186,6 +197,9 @@ function($scope, $http, $routeParams){
 		});
 	};
 
+}])
 
+.controller('docCtrl', ['$rootScope', function ($rootScope) {
+	$rootScope.doc = true;
 }]);
 

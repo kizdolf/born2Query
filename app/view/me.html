@@ -1,59 +1,101 @@
-<h1>Coucou {{stats.user.identity.firstName}}</h1>
+<h2>Bonjour {{stats.user.identity.firstName}} !</h2>
 
 <h3>{{token}}</h3>
 
-<div id="logged">
+<div id="logged" ng-switch="template">
 	<br><br>
-	<div>
-		<h2>STATS</h2>
-		 {{credit.nb}} credits  vs {{debit.nb}} debits ({{credit.amount}} vs {{debit.amount}})
-	</div>
-	age: {{stats.user.age}}
-	<br>money: {{stats.user.money.current}}
-	<br>contacts:
-	<ul>
-		<li ng-repeat="contact in stats.user.contacts">
-		{{contact.name}} => {{ contact.mail }} <br>
-		<a ng-click="moneyAsking(contact)" class="btn btn-info">Ask money</a>
-		</li>
-	</ul>
-	<div id="asking" style="display:none;">
-		<p>Demander un peu de thunes à {{askTo.name}}</p>
-		<input	type="text" placeholder="montant" ng-model="ask.amount">
-		<input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date">
-		<textarea ng-model="ask.reason">"explaaaaaiiiinnnn(référence à doctor who sisi tkt)</textarea>
-		<button ng-click="askMoney(ask)">Ask!</button>
+	<div ng-switch-when="stats">
+		<div>
+			<h3>Voici les informations te concernant :</h3>
+			<p>
+				Tu as <span style="color:purple">{{stats.user.age}}</span> ans et actuellement <span style="color:darkgreen;font-weight:bold">{{stats.user.money.current}}</span> € sur ton compte.
+			</p>
+			<p>
+				Voici un résumé de tes mouvements bancaires. Pour plus d'information sur les opérations, clique <a href="#/me/operations" style="color:grey;font-weight:bold">ici</a> !
+				<ul>
+				  <li>{{credit.nb}} crédit</li>
+					<li>{{debit.nb}} débits </li>
+					<li>({{credit.amount}} vs {{debit.amount}})</li>
+				</ul>
+			</p>
+		</div>
+
 
 	</div>
-	<br>operations:
-	<ul style="max-height:500px; overflow:auto;">
-		<li ng-repeat="ope in stats.ops">
-			{{ope.date.split('T')[0].split('-').reverse().join('/')}} : 
-			<span ng-if="ope.InOut == 'credit'">+</span>
-			<span ng-if="ope.InOut != 'credit'" >-</span>
-			{{ope.amount}} € via {{ ope.type }} . Status : <span ng-show="ope.sucess">Done.</span><span ng-show="!ope.sucess">Failed.</span> <button class="btn btn-danger btn-xs " ng-click="deleteOpe(ope)" title="supress ope">x</button>
-		</li>
-	</ul>
-	
-	<br>
-	New ope:
-	Credit (+)<input type="checkbox" ng-model="ope.InOut" ng-true-value="credit"> <br/>
-  	Debit (-) <input type="checkbox" ng-model="ope.InOut" ng-true-value="debit"> <br/>
-  	<h4>Type :</h4>
-  	CB <input type="checkbox" ng-model="ope.type" ng-true-value="cb"> <br/>
-  	Cheque <input type="checkbox" ng-model="ope.type" ng-true-value="cheque"> <br/>
-  	Mobile <input type="checkbox" ng-model="ope.type" ng-true-value="mobile"> <br/>
-  	Internet <input type="checkbox" ng-model="ope.type" ng-true-value="internet"> <br/>
-  	Desk <input type="checkbox" ng-model="ope.type" ng-true-value="desk"> <br/>
-	<input ng-model="ope.amount" type="text" placeholder="amount">
-	<button ng-click="newOpe(ope)">new ope</button>
-	<br>
-	New contact:
-	<input ng-model="contact.name" type="text" placeholder="name">
-	<input ng-model="contact.mail" type="text" placeholder="mail">
-	<button ng-click="newContact(contact)">new contact</button>
-	<div class="alert alert-info" ng-show="notif !== '' " style="position: fixed; top: 10vh;">
-		{{notif}}
+	<div ng-switch-when="money">
+		<h3>Voici la liste de tes contacts :</h3>
+		<ul>
+			<li ng-repeat="contact in stats.user.contacts" style="list-style: none; margin-bottom:10px">
+				<i class="fa fa-user"></i>
+				<span style="width:50%;display:inline-block">{{contact.name}} ({{ contact.mail }})</span>
+				<a ng-click="moneyAsking(contact)" class="btn btn-info">Demande de l'argent</a>
+			</li>
+		</ul>
+		<hr/>
+		<h3>Ajoute un nouveau contact :</h3>
+		<label style="width:170px">Quel est son nom ? </label><input ng-model="contact.name" type="text" placeholder="Par exemple Papa ou Maman" style="width:200px"> <br>
+		<label style="width:170px">Écris son e-mail ?</label><input ng-model="contact.mail" type="text" placeholder="mon-email@mon-fournisseur-d-access.com" style="width:300px"> <br>
+		<button style="position:absolute;right:100px" ng-click="newContact(contact)" class="btn btn-default">Nouveau contact</button>
+		<hr>
+		<div class="alert alert-info" ng-show="notif !== '' " style="position: fixed; top: 10vh;">
+			{{notif}}
+		</div>
+		<div id="asking" style="display:none;">
+			<h3>Demande de l'argent à {{askTo.name}}</h3>
+			<label style="width:170px">De combien as-tu besoin ?</label><input	type="text" placeholder="montant" ng-model="ask.amount"><br/>
+			<label style="width:170px">Pour quand as-tu besoin d'argent ?</label><input	type="text" placeholder="date (AAAA-MM-JJ)" ng-model="ask.date"><br/>
+			<label style="width:170px">Pourquoi veux-tu demander de l'argent ?</label><textarea ng-model="ask.reason">J'ai besoin d'argent de poche parce que...</textarea><br/>
+			<button ng-click="askMoney(ask)" class="btn btn-default">Envoie ta demande</button>
+		</div>
+	</div>
+	<div ng-switch-when="operations">
+		<h3>Gère tes opérations :</h3>
+		<table id="operations" style="max-height:500px; overflow:auto; border:none">
+			<tr ng-repeat="ope in stats.ops" style="list-style:none">
+				<td>{{ope.date.split('T')[0].split('-').reverse().join('/')}} :</td>
+				<td>
+					<span ng-if="ope.InOut == 'credit'"><i class="fa fa-plus" style="color:green"></i></span>
+					<span ng-if="ope.InOut != 'credit'"><i class="fa fa-minus" style="color:red"></i></span>
+					{{ope.amount}} €
+				</td>
+				<td>
+					via {{ ope.type }}.
+				</td>
+				<td>
+					Status : <span ng-show="ope.sucess">Done.</span><span ng-show="!ope.sucess">Failed.</span>
+				</td>
+				<td align="right">
+					<button class="btn btn-danger btn-xs " ng-click="deleteOpe(ope)" title="supress ope"><i style="color:white" class="fa fa-close"></i></button>
+				</td>
+			</tr>
+		</table>
+		<hr />
+		<h3>Entre une nouvelle opération :</h3>
+			<label style="width:300px">Crédit (<i class="fa fa-plus" style="color:green"></i>)</label><input type="checkbox" ng-model="ope.InOut" ng-true-value="credit"> <br/>
+			<label style="width:300px">Débit (<i class="fa fa-minus" style="color:red"></i>)</label><input type="checkbox" ng-model="ope.InOut" ng-true-value="debit"> <br/>
+	    <h4>Type :</h4>
+	    <label style="width:100px">CB</label><input type="checkbox" ng-model="ope.type" ng-true-value="cb"> <br/>
+			<label style="width:100px">Cheque</label><input type="checkbox" ng-model="ope.type" ng-true-value="cheque"> <br/>
+			<label style="width:100px">Mobile</label><input type="checkbox" ng-model="ope.type" ng-true-value="mobile"> <br/>
+			<label style="width:100px">Internet</label><input type="checkbox" ng-model="ope.type" ng-true-value="internet"> <br/>
+			<label style="width:100px">Desk</label><input type="checkbox" ng-model="ope.type" ng-true-value="desk"> <br/>
+		<input ng-model="ope.amount" type="text" placeholder="Mon montant">
+		<button class="btn btn-default" ng-click="newOpe(ope)">Nouvelle opération</button>
+		<br>
+	</div>
+	<div ng-switch-default>
+		<p>
+			Ici, tu vas pouvoir gérer ton argent pour de vrai !
+		</p>
+		<p>
+			Regarde sur la droite, un menu te permet de consulter les informations de ton compte, afin de savoir combien d'argent tu possèdes.
+		</p>
+		<p>
+			Tu peux également demander de l'argent à l'un des proches. Rentre son email et explique-lui pourquoi il te faut un peu d'argent de poche. Il pourra alors t'accorder ou te refuser ce petit extra !
+		</p>
+		<p>
+			Enfin, regarde le troisième onglet du menu. Sur la page des opérations, tu pourras en détail consulter les dernières actions qui ont eu lieu sur ton compte.
+		</p>
 	</div>
 
 </div>

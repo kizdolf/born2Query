@@ -1,5 +1,11 @@
 body {
     color: white;
+    background:rgb(225,225,225);
+}
+
+#logo {
+    margin-top:-10px;
+    -webkit-transform: rotatey(180deg); /* Chrome, Safari, Opera */
 }
 
 @media screen and (min-width: 992px) {
@@ -21,16 +27,99 @@ textarea{
 }
 /*Fin modif Jules*/
 
+
+#header-top {
+    margin-top:15px;
+    border-radius: 7px;
+    padding:10px;
+}
+
 #header-mid {
+    margin-top: 5px;
     text-align:center;
+    cursor: pointer;
+    padding: 10px;
+    width:99.2%;
+    margin-left:0.4%;
+}
+
+@media screen and (min-width: 992px) {
+    #header-mid .row div:first-of-type {
+        border-radius: 7px 0px 0px 7px;
+    }
+    #header-mid .row div:last-of-type {
+        border-radius: 0px 7px 7px 0px;
+    }
 }
 
 #header-mid a {
     color: white;
     font-weight: bold;
-    font-family: arial;
+    font-family: arial, sans-serif;
     font-size:12px;
     line-height: 28px;
+    text-decoration: none;
+}
+
+#header-bot {
+    background-color:rgb(178,182,184);
+    border-radius: 7px;
+    margin-top:-7px;
+    width:100%;
+}
+
+aside {
+    margin-bottom: 50px;
+}
+
+aside div {
+    cursor: pointer;
+    text-align:left;
+}
+
+aside div:first-of-type {
+    border-radius: 7px 7px 0px 0px;
+}
+
+aside div:last-of-type {
+    border-radius: 0px 0px 7px 7px;
+}
+
+aside a, aside a:hover {
+    color:white;
+    text-decoration:none;
+}
+
+aside i {
+    width:20%;
+}
+
+aside a:focus {
+    text-decoration:none;
+    color: rgb(99, 224, 224);
+}
+
+section {
+    color: #23868b;
+    margin-top: -24px;
+    padding-bottom: 150px;
+}
+
+#ad {
+    padding: 30px 10px 30px 10px;
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 992px) {
+    #ad {
+        display:none;
+    }
+}
+
+#footer {
+    position:fixed;
+    bottom: 0;
+    background-color:grey;
 }
 
 .red {
@@ -38,9 +127,11 @@ textarea{
 }
 
 .blue {
-    background-color: darkblue;
+    background-color: #23868b;
 }
-
+.blue:hover {
+    background-color: #28b9be;
+}
 .yellow {
     background-color: darkgoldenrod;
 }
@@ -51,4 +142,16 @@ textarea{
 
 .purple {
     background-color: darkmagenta;
+}
+
+.white {
+    background-color: white;
+}
+
+#operations td {
+    width:100px;
+}
+
+#logon input {
+    margin-top-10px;
 }

@@ -5,60 +5,78 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="styles/app.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
 </head>
 <body>
 
 		<div class="container" ng-controller='mainCtrl'>
 			<header class="row">
-				<div id="header-top" class="col-md-12 blue">
+				<div id="header-top" class="col-md-12 white">
 					<div class="row">
 						<div class="col-md-2 col-sm-12">
-							<img src="images/logo_882.png">
+							<a href="/#/app"><img src="images/logo_882.png" id="logo"></a>
 						</div>
 						<div class="col-md-3 col-md-offset-7 col-sm-12">
-							<a ng-click="logout()">logout</a>
+							<div ng-show="!logged">
+								<a class="btn btn-default" href="#/login">Connexion</a>
+								<a class="btn btn-default" href="#/logon">Inscription</a>
+							</div>
+							<div ng-show="logged">
+								<a class="btn btn-default" ng-click="logout()">Déconnexion</a>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div id="header-mid" class="col-md-12 yellow">
+				<div id="header-mid" class="col-md-12">
 					<div class="row">
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Comptes et service</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Messagerie</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Espace conseil</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Devis et simulation</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Quotidien</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Crédits</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Épargne</a></div>
-						<div class="mycolmd8 col-sm-6 red"><a href="#">Assurance</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Comptes</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Messagerie</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Espace conseil</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Devis </a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Quotidien</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Crédits</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Épargne</a></div>
+						<div class="mycolmd8 col-sm-6 blue"><a href="#">Assurance</a></div>
 					</div>
 				</div>
-				<div id="header-bot" class="col-md-12 green">
+				<div id="header-bot" class="col-md-12">
 					<div class="row">
-						<div class="col-md-2 purple">Path</div>
-						<div class="col-md-offset-7 col-md-3 purple">Vous avez 1 nouveau message</div>
+						<div class="col-md-2">{{path}}</div>
+						<div class="col-md-offset-6 col-md-4" style="text-align:right"><i class="fa fa-envelope-o"></i> Vous avez (0) nouveau message</div>
 					</div>
 				</div>
 			</header>
 			<div id="body" class="row" style="margin-top:30px">
-				<aside class="col-md-3 blue">
+				<aside class="col-md-3" ng-show="logged" ng-hide="doc || !logged">
 					<div class="row">
-						<div class="col-md-12">submenu 1</div>
-						<div class="col-md-12">submenu 2</div>
-						<div class="col-md-12">submenu 3</div>
-						<div class="col-md-12">submenu 4</div>
-						<div class="col-md-12">submenu 5</div>
+						<div class="col-md-12 blue"><i class="fa fa-archive"></i><a href="#/me/stats">Mes infos</a></div>
+						<div class="col-md-12 blue"><i class="fa fa-eur"></i><a href="#/me/money">Demander de l'argent</a></div>
+						<div class="col-md-12 blue"><i class="fa fa-credit-card"></i><a href="#/me/operations">Mes opérations</a></div>
 					</div>
 				</aside>
-				<section class="col-md-6 yellow" ng-view></section>
-				<aside class="col-md-3 blue">
+				<section ng-class="{'col-md-6': logged, 'col-md-9': !logged}" ng-view></section>
+				<aside id="ad" class="col-md-3 blue" ng-hide="doc">
 					<div class="row">
-						<div class="col-md-12">Ads</div>
+						<div class="col-md-12"><h3 style="text-align:center">Envie d'en savoir plus ?</h3></div>
 						<div class="col-md-12">
-							<a href="#/doc"><img src="images/teens1.jpg" style="width:100%"></a>
+							<figure><a href="#/doc"><img src="images/teens1.jpg" style="width:100%"></a>
+								<figcaption style="margin-top:20px;font-style:italic; text-align:center">
+									Alors clique sur l'image !
+								</figcaption>
+							</figure>
+
 						</div>
 					</div>
 				</aside>
+			</div>
+		</div>
 
+		<div id="footer">
+			<div id="disclaimer" class="col-md-12 red" style="text-align:center">
+				Disclaimer : ce site, projet pour le hackathon It School Race n'est en aucune façon lié au Crédit Agricole. Nous ne vous demanderons aucunes coordonnées bancaires ni ne procéderont à de réelles transactions financières.
+			</div>
+			<div id="credits" class="col-md-12" style="text-align:center">
+				Born2Query, par Samy Kacimi, Jules Buret et Grégory Betton, étudiants de l'école 42, 2014.
 			</div>
 		</div>
 

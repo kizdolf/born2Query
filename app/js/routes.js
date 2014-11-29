@@ -29,10 +29,14 @@ angular.module('CA42.routes', ['ngRoute'])
 		controller: 'userCtrl'
 	});
 
+	$routeProvider.when('/me/:template', {
+		templateUrl: 'view/me.html',
+		controller: 'userCtrl'
+	});
 
 	$routeProvider.when('/doc', {
-		templateUrl: 'view/docApi.html'
-		// controller: 'userCtrl'
+		templateUrl: 'view/docApi.html',
+		controller: 'docCtrl'
 	});
 
 	$routeProvider.otherwise({

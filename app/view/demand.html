@@ -1,11 +1,16 @@
-<h2>Vous avez une demande en attente de {{user.identity.firstName}} {{user.identity.lastName}} </h2>
+<h3>Bonjour, vous avez une demande en attente ! </h3>
+
 <div class="alert alert-success" ng-show="message.length > 0">{{message}}</div>
 <div class="alert alert-danger" ng-show="err.length > 0">{{err}}</div>
 
-<br>Montant : {{demand.amount}}
-<br>Raison : {{demand.reason}}
-<br>A la date de : {{demand.date}}
+<p>
+  {{user.identity.firstName}} {{user.identity.lastName}} a besoin de votre aide. Il aimerait vous demander
+  <span style="color:green;font-size:bold">{{demand.amount}} €</span> avant le {{demand.date}} car :
+</p>
+<p>
+  {{demand.reason}}
+</p>
 <div id='btnsVal'>
-<button ng-click="validate(1)">Je suis d'accord. Envoyer les sous</button>
-<button ng-click="validate(0)">Non mais il vas pas bien celui là!</button>
+<button class="btn btn-default" ng-click="validate(1)">J'accepte !</button>
+<button class="btn btn-default" ng-click="validate(0)">Je refuse !</button>
 </div>
