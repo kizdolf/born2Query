@@ -7,13 +7,18 @@ var Teen 				= require('./../models/teenUser'),
 	Token				= require('rand-token'),
 	_ 					= require('lodash');
 
-var transporter = nodemailer.createTransport({
+var api_key = 'key-9f02339ecc3554ab068abe9abd4abc9d';
+var domain = 'grebett.xyz';
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
+
+/*var transporter = nodemailer.createTransport({
 	service: 'Gmail',
 	auth: {
 		user: 'buretjules@gmail.com',
 		pass: 'kizdolf65'
 	}
-});
+});*/
 
 function templateMail(user, demand, link){
 	var mail = '<h3>Bonjour!</h3><hr>';  
@@ -69,7 +74,7 @@ exports.ask = function(req, res){
 					if(err)
 						res.send(err);
 					//mainteant on génére et envoie le mail. 
-					var fullUrl = req.protocol + '://' + req.get('host') + '/app/#/uniqueDemand?id='+ demande.id + '&token=' + demande.token;
+					var fullUrl = 'http://192.95.27.216/app/#/uniqueDemand?id='+ demande.id + '&token=' + demande.token;
 					var link = {
 						html : '<a href="' + fullUrl+ '">demande Ca42</a>',
 						plain: fullUrl
@@ -81,13 +86,24 @@ exports.ask = function(req, res){
 						text: 'Bonjour , \n '+ user.identity.firstName + ' ' + user.identity.lastName + ' a une demande pour vous\nDemande : ' + demande.reason + ' \n Avec un montant de ' + demande.amount + '\n Veuillez suivre sur ce lien pour répondre : ' + link.plain + ' \n Merci. Ca42', 
 						html: templateMail(user, demande, link), 
 					};
-					transporter.sendMail(mailOptions, function(error){
+
+mailgun.messages().send(mailOptions, function (error, body) {
+  if (error)
+	res.json({err: 'Erreur dans l\'envoi du mail', error: error});
+  else {
+	res.json({message: 'Mail envoyé avec succès !'});
+	console.log(body);
+  }
+});
+					
+/*transporter.sendMail(mailOptions, function(error){
 						if(error){
+console.log('error'); console.log(error);
 							res.json({err: 'mail not sent', error : error});
 						}else{
 							res.json({message: 'mail sent'});
 						}//fin else
-					}); //fin sendmail
+					}); //fin sendmail*/
 				});//fin user save
 			}//fin else
 		}else{
