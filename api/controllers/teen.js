@@ -10,8 +10,8 @@ var Teen 				= require('./../models/teenUser'),
 var transporter = nodemailer.createTransport({
 	service: 'Gmail',
 	auth: {
-		user: 'buretjules@gmail.com',
-		pass: 'kizdolf65'
+		user: '<mail_login>',  //hiding personal stuff
+		pass: '<mail_password>'
 	}
 });
 
