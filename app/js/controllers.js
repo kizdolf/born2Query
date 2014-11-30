@@ -22,8 +22,8 @@ function($scope, $http, localStorageService, $location, $rootScope){
 
 }])
 
-.controller('loginCtrl', ['$scope', '$http', 'localStorageService', '$location', '$rootScope',
-function($scope, $http, localStorageService, $location, $rootScope){
+.controller('loginCtrl', ['$scope', '$http', 'localStorageService', '$location', 
+function($scope, $http, localStorageService, $location){
 	$scope.message = 'please log in';
 	localStorageService.clearAll();
 
