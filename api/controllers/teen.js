@@ -15,8 +15,8 @@ var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 /*var transporter = nodemailer.createTransport({
 	service: 'Gmail',
 	auth: {
-		user: 'buretjules@gmail.com',
-		pass: 'kizdolf65'
+		user: '<mail_login>',  //hiding personal stuff
+		pass: '<mail_password>'
 	}
 });*/
 
