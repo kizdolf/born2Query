@@ -95,7 +95,6 @@ function($scope, $http, localStorageService, $timeout, $routeParams, $location, 
 			$scope.credit.amount = $.sumOpes($scope.credit.opes);
 			$scope.debit.nb = $scope.debit.opes.length;
 			$scope.debit.amount = $.sumOpes($scope.debit.opes);
-			console.log($scope.debit);
 		});
 	};
 	$scope.statUser();
