@@ -47,8 +47,8 @@ function($scope, $http, localStorageService, $location){
 
 }])
 
-.controller('logonCtrl', ['$scope', '$http', 
-function($scope, $http){
+.controller('logonCtrl', ['$scope', '$http', '$location', 'localStorageService',
+function($scope, $http, $location, localStorageService) {
 
 	$scope.message = 'please log in';
 
@@ -57,9 +57,13 @@ function($scope, $http){
 		.then(function(data){
 			console.log(data);
 			if(!!data.data.err){
-				$scope.message = 'Something bad happen.';
-			}else{
-				$scope.message = 'Welcome ' + data.data.user.identity.firstName;
+				$scope.message = 'Erreur : ' + data;
+			} else {
+				$scope.message = 'Bienvenue ' + data.data.user.identity.firstName;
+				localStorageService.set('token', data.data.user.token);
+				localStorageService.set('no_client', data.data.user.no_client);
+				localStorageService.set('firstname', data.data.user.identity.firstName);
+				$location.path('me');
 			}
 		});
 	};
