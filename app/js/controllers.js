@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('CA42.controllers', [])
+angular.module('CA42.controllers', ['ui.bootstrap', 'rzModule'])
 
 .controller('mainCtrl', ['$scope', '$http', 'localStorageService', '$location', '$rootScope',
 function($scope, $http, localStorageService, $location, $rootScope){
@@ -66,8 +66,8 @@ function($scope, $http){
 
 }])
 
-.controller('userCtrl', ['$scope', '$http', 'localStorageService', '$timeout', '$routeParams', '$location', '$rootScope',
-function($scope, $http, localStorageService, $timeout, $routeParams, $location, $rootScope){
+.controller('userCtrl', ['$scope', '$http', 'localStorageService', '$timeout', '$routeParams', '$location', '$rootScope', '$filter',
+function($scope, $http, localStorageService, $timeout, $routeParams, $location, $rootScope, $filter){
 	$rootScope.logged = true;
 	$rootScope.doc = false;
 
@@ -76,9 +76,14 @@ function($scope, $http, localStorageService, $timeout, $routeParams, $location, 
 
 	$scope.message = 'Welcome !!';
 	$scope.notif = '';
+	$scope.ask = {};
+
+	$scope.minDate = new Date();
+
 	var token = localStorageService.get('token');
 	var no_client = localStorageService.get('no_client');
 
+	$scope.priceSlider = 200;
 
 	$scope.statUser = function(){
 		$http.get('/api/stats/' + no_client + '/' + token)
@@ -133,13 +138,21 @@ function($scope, $http, localStorageService, $timeout, $routeParams, $location, 
 		$scope.askTo =  contact;
 	};
 
+	$scope.translate = function(value){
+		$scope.ask.amount = value;
+		return value+'€';
+	};
+
 	$scope.askMoney = function(ask){
+		console.log($scope.priceSlider + '<< slider');
 		ask.to = $scope.askTo;
+		$('#asking').hide('slow');
+		ask.date = $filter('date')(ask.date, 'yyyy-MM-dd');
 		console.log(ask);
 		$http.post('/api/ask/' + no_client + '/' + token, ask)
 		.then(function(data){
-			console.log(data);
 			popNotif(data.data.message);
+			ask  = {};
 		});
 	};
 

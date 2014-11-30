@@ -7,17 +7,3 @@
 	<button ng-click="login(user)" class="btn btn-default" id="btnLogin">Connexion</button>
 </div>
 
-
-<script>
-  $(function(){
-	'use strict';
-	$('input').width(180);
-	$('input').exp({
-		width: 280,
-		duration: 200,
-		action: function(){
-			$('#btnLogin').click();
-		}
-	});
-  });
-</script>
