@@ -7,7 +7,7 @@ var express				= require('express'),
 	router				= require('./api/routes'), 
 	mongoose   		= require('mongoose');
 
-mongoose.connect('mongodb://<account>:<password>@<server>/ca_42'); // connect to our database, login are precious, so I keep them ;)
+mongoose.connect('mongodb://donkino:public65ENEMY@ds053160.mongolab.com:53160/ca_42'); // connect to our database
 
 app.set('views', __dirname + '/app')
 
